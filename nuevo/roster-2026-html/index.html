@@ -1,0 +1,2096 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>BIG Agency — Roster 2026</title>
+<style>@font-face { font-family: 'Inter'; font-weight: 400; src: url('assets/fonts/Inter-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Inter'; font-weight: 500; src: url('assets/fonts/Inter-Medium.ttf') format('truetype'); }
+@font-face { font-family: 'Inter'; font-weight: 700; src: url('assets/fonts/Inter-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'Inter'; font-weight: 800; src: url('assets/fonts/Inter-ExtraBold.ttf') format('truetype'); }
+@font-face { font-family: 'Inter'; font-weight: 900; src: url('assets/fonts/Inter-Black.ttf') format('truetype'); }
+
+:root {
+  --azul: #33419A;
+  --azul-deep: #262f78;
+  --naranja: #FF761E;
+  --lima: #E8F29C;
+  --negro: #0D0D14;
+  --blanco: #FFFFFF;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+@page { size: 1920px 1080px; margin: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--negro);
+  background: #ccc;
+}
+
+.page {
+  width: 1920px;
+  height: 1080px;
+  position: relative;
+  overflow: hidden;
+  background: var(--azul);
+  page-break-after: always;
+  break-after: page;
+}
+
+.recurso {
+  position: absolute;
+  opacity: .16;
+  pointer-events: none;
+}
+
+/* ---------- COVER ---------- */
+.cover-page { background: var(--azul); padding: 96px; display: flex; flex-direction: column; position: relative; }
+.cover-top { display: flex; align-items: center; gap: 14px; position: relative; z-index: 2; }
+.isotipo-mark { width: 120px; height: 120px; flex-shrink: 0; display: block; color: var(--blanco); }
+.isotipo-mark.small { width: 64px; height: 64px; position: absolute; left: 96px; bottom: 56px; z-index: 2; color: var(--blanco); }
+
+.cover-body { display: flex; flex: 1; align-items: flex-start; gap: 96px; margin-top: 56px; position: relative; z-index: 2; }
+.cover-left { width: 40%; }
+.cover-kicker { font-weight: 700; font-size: 18px; letter-spacing: -0.02em; color: var(--naranja); margin-bottom: 20px; }
+.cover-headline {
+  font-weight: 900; font-size: 132px; line-height: .92; letter-spacing: -0.06em;
+  color: var(--blanco);
+}
+.cover-headline em { font-style: normal; color: var(--lima); }
+.cover-sub { font-weight: 500; font-size: 22px; line-height: 1.4; color: rgba(255,255,255,.72); margin-top: 32px; max-width: 480px; }
+
+.cover-grid {
+  flex: 1; height: 720px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 16px;
+}
+.cg-photo {
+  border-radius: 24px;
+  background-size: cover;
+  background-position: center;
+  background-color: rgba(255,255,255,.08);
+}
+.cg-block { border-radius: 24px; display: flex; align-items: flex-end; }
+.cg-block.naranja { background: var(--naranja); }
+.cg-block.lima { background: var(--lima); }
+
+.cover-foot { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 40px; position: relative; z-index: 2; }
+.cover-caption { font-weight: 600; font-size: 15px; color: rgba(255,255,255,.6); }
+
+/* ---------- INDEX ---------- */
+.index-page { padding: 120px 140px; }
+.idx-kicker { font-weight: 700; font-size: 16px; letter-spacing: -0.02em; color: var(--naranja); margin-bottom: 8px; }
+.idx-h1 { font-weight: 900; font-size: 88px; letter-spacing: -0.07em; color: var(--blanco); margin-bottom: 56px; }
+.idx-cols { display: flex; gap: 140px; }
+.idx-col { flex: 1; }
+.idx-group-title { font-weight: 700; font-size: 20px; letter-spacing: -0.02em; color: var(--lima); margin: 0 0 16px; }
+.idx-group-title.spaced { margin-top: 40px; }
+.idx-row { display: flex; align-items: baseline; gap: 16px; padding: 10px 0; font-size: 21px; }
+.idx-num { color: var(--naranja); font-weight: 700; width: 32px; }
+.idx-leader { flex: 1; border-bottom: 1px dotted rgba(255,255,255,.3); margin-bottom: 6px; }
+.idx-label { color: var(--blanco); font-weight: 500; }
+
+/* ---------- DIVIDER ---------- */
+.divider-title {
+  position: absolute; left: 96px; top: 50%; transform: translate(0, -50%);
+  font-weight: 900; font-size: 148px; letter-spacing: -0.07em; color: var(--blanco);
+  white-space: nowrap; z-index: 2;
+}
+.divider-title em { font-style: normal; color: var(--naranja); }
+.divider-pageno { position: absolute; left: 96px; top: 64px; font-weight: 700; font-size: 22px; color: var(--lima); z-index: 2; }
+
+/* ---------- CONTACTO ---------- */
+.contacto-content {
+  position: absolute; right: 140px; top: 50%; transform: translateY(-50%);
+  z-index: 2; text-align: right;
+}
+.contacto-item { margin-bottom: 22px; }
+.contacto-label { display: block; font-weight: 700; font-size: 11px; color: var(--naranja); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 3px; }
+.contacto-value { display: block; font-weight: 700; font-size: 17px; color: var(--blanco); letter-spacing: -0.02em; }
+
+/* ---------- FOOTER / NAV ---------- */
+.pagefooter {
+  position: absolute; left: 0; right: 0; bottom: 40px; height: 20px;
+  font-size: 15px; font-weight: 700; color: var(--naranja);
+  z-index: 2;
+}
+.footer-center { position: absolute; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,.45); font-weight: 500; }
+.footer-right { position: absolute; right: 96px; color: var(--blanco); }
+.pagenav {
+  position: absolute; top: 40px; right: 96px;
+  display: flex; gap: 32px; font-size: 15px; font-weight: 700; color: var(--lima);
+  z-index: 2;
+}
+
+/* ---------- GRID PAGE ---------- */
+.grid-page { padding: 64px 96px 0; }
+.grid-header { margin-bottom: 28px; position: relative; z-index: 2; }
+.grid-title { font-weight: 900; font-size: 44px; letter-spacing: -0.06em; color: var(--blanco); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 208px);
+  column-gap: 28px;
+  row-gap: 28px;
+  position: relative;
+  z-index: 2;
+  margin: 0 auto;
+}
+
+/* ---------- CARD ---------- */
+.card {
+  width: 208px;
+  background: var(--blanco);
+  border-radius: 20px;
+  box-shadow: 0 14px 32px rgba(0,0,0,.22);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.photo {
+  width: 100%; height: 178px;
+  border-radius: 16px;
+  background-size: 190% 190%;
+  background-position: center;
+  background-color: #d9d9d9;
+}
+.photo-placeholder { background: #d9d9d9; }
+.name {
+  font-weight: 700; font-size: 22px; line-height: 1.12; letter-spacing: -0.03em;
+  color: var(--azul);
+  height: 56px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.tagrow { display: flex; flex-wrap: wrap; gap: 6px; min-height: 22px; }
+.tag {
+  background: var(--azul); color: var(--blanco);
+  font-weight: 500; font-size: 10px; letter-spacing: -0.02em;
+  padding: 4px 9px; border-radius: 6px;
+  white-space: nowrap;
+}
+.statrow { display: flex; gap: 6px; }
+.stat {
+  flex: 1; background: var(--naranja); border-radius: 9px;
+  padding: 8px 9px; display: flex; flex-direction: column; gap: 1px;
+}
+.stat-label { font-weight: 500; font-size: 9px; color: var(--lima); }
+.stat-value { font-weight: 700; font-size: 15px; color: var(--lima); letter-spacing: -0.02em; }
+</style>
+</head>
+<body>
+
+    <div class="page cover-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3200px;left:10%;top:40%;transform:translate(-50%,-50%);opacity:0.5;filter:brightness(1.7);">
+      <div class="cover-top">
+        <svg class="isotipo-mark" viewBox="0 0 1080 1080"><path fill="currentColor" d="M 724.683594 551.480469 L 724.261719 549.105469 C 715.742188 493.085938 650.066406 457.632812 598.066406 483.089844 C 516.671875 515.761719 458.914062 596.804688 458.984375 688.710938 C 458.988281 691.921875 458.265625 695.132812 456.59375 697.875 C 448.285156 711.496094 424.472656 708.839844 420.085938 692.992188 C 419.34375 690.308594 419.332031 687.472656 419.84375 684.734375 C 440.027344 576.277344 523.398438 484.042969 625.621094 444.773438 C 626.273438 444.488281 626.917969 444.179688 627.550781 443.847656 C 675.449219 415.460938 659.902344 334.273438 604.042969 326.5 C 600.253906 325.796875 596.359375 325.433594 592.375 325.433594 L 347.835938 325.433594 L 347.835938 754.566406 L 725.578125 754.566406 C 724.902344 746.117188 726.941406 563.613281 724.683594 551.480469 "/></svg>
+      </div>
+      <div class="cover-body">
+        <div class="cover-left">
+          <div class="cover-kicker">BIG AGENCY</div>
+          <div class="cover-headline">Roster<br>de<br><em>Talentos</em></div>
+          <div class="cover-sub">Creadores y creadoras que conectan marcas con audiencias reales, en cada categoría y en cada red.</div>
+        </div>
+        <div class="cover-grid">
+          <div class="cg-photo" style="grid-column:1;grid-row:1/3;background-image:url('assets/photos/image2.png')"></div>
+          <div class="cg-photo" style="grid-column:2;grid-row:1;background-image:url('assets/photos/image1.png')"></div>
+          <div class="cg-photo" style="grid-column:3;grid-row:1;background-image:url('assets/photos/image6.png')"></div>
+          <div class="cg-photo" style="grid-column:2;grid-row:2;background-image:url('assets/photos/image19.png')"></div>
+          <div class="cg-photo" style="grid-column:3;grid-row:2;background-image:url('assets/photos/image30.png')"></div>
+          <div class="cg-photo" style="grid-column:1;grid-row:3;background-image:url('assets/photos/image4.png')"></div>
+          <div class="cg-photo" style="grid-column:2;grid-row:3;background-image:url('assets/photos/image10.png')"></div>
+          <div class="cg-photo" style="grid-column:3;grid-row:3;background-image:url('assets/photos/image5.png')"></div>
+        </div>
+      </div>
+      <div class="cover-foot">
+        <div class="cover-caption">BIG Agency · Buenos Aires, Argentina</div>
+        <div class="cover-caption">2026</div>
+      </div>
+    </div>
+
+    <div class="page index-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:88%;top:15%;transform:translate(-50%,-50%);opacity:0.5;filter:brightness(1.7);">
+      <div class="idx-kicker">ROSTER 2026</div>
+      <div class="idx-h1">Índice</div>
+      <div class="idx-cols">
+        <div class="idx-col">
+          <div class="idx-group-title">Por género</div>
+          <div class="idx-row"><span class="idx-num">03</span><span class="idx-leader"></span><span class="idx-label">Mujeres</span></div><div class="idx-row"><span class="idx-num">07</span><span class="idx-leader"></span><span class="idx-label">Hombres</span></div>
+          <div class="idx-group-title spaced">Contactate con BIG</div>
+          <div class="idx-row"><span class="idx-num">39</span><span class="idx-leader"></span><span class="idx-label">Contacto</span></div>
+        </div>
+        <div class="idx-col">
+          <div class="idx-group-title">Por categoría</div>
+          <div class="idx-row"><span class="idx-num">11</span><span class="idx-leader"></span><span class="idx-label">Lifestyle</span></div><div class="idx-row"><span class="idx-num">16</span><span class="idx-leader"></span><span class="idx-label">Beauty &amp; Makeup</span></div><div class="idx-row"><span class="idx-num">18</span><span class="idx-leader"></span><span class="idx-label">Trends</span></div><div class="idx-row"><span class="idx-num">21</span><span class="idx-leader"></span><span class="idx-label">Fitness</span></div><div class="idx-row"><span class="idx-num">23</span><span class="idx-leader"></span><span class="idx-label">Humor &amp; Sketches</span></div><div class="idx-row"><span class="idx-num">28</span><span class="idx-leader"></span><span class="idx-label">Entretenimiento</span></div><div class="idx-row"><span class="idx-num">33</span><span class="idx-leader"></span><span class="idx-label">Foodie</span></div><div class="idx-row"><span class="idx-num">35</span><span class="idx-leader"></span><span class="idx-label">Youtube</span></div><div class="idx-row"><span class="idx-num">37</span><span class="idx-leader"></span><span class="idx-label">Tecnología &amp; Crypto</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page divider-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:78%;top:60%;transform:translate(-50%,-50%);opacity:0.55;filter:brightness(1.7);">
+      <div class="divider-title"><em>Mujeres</em></div>
+      <svg class="isotipo-mark small" viewBox="0 0 1080 1080"><path fill="currentColor" d="M 724.683594 551.480469 L 724.261719 549.105469 C 715.742188 493.085938 650.066406 457.632812 598.066406 483.089844 C 516.671875 515.761719 458.914062 596.804688 458.984375 688.710938 C 458.988281 691.921875 458.265625 695.132812 456.59375 697.875 C 448.285156 711.496094 424.472656 708.839844 420.085938 692.992188 C 419.34375 690.308594 419.332031 687.472656 419.84375 684.734375 C 440.027344 576.277344 523.398438 484.042969 625.621094 444.773438 C 626.273438 444.488281 626.917969 444.179688 627.550781 443.847656 C 675.449219 415.460938 659.902344 334.273438 604.042969 326.5 C 600.253906 325.796875 596.359375 325.433594 592.375 325.433594 L 347.835938 325.433594 L 347.835938 754.566406 L 725.578125 754.566406 C 724.902344 746.117188 726.941406 563.613281 724.683594 551.480469 "/></svg>
+      <div class="divider-pageno">03</div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">3</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Mujeres</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image2.png')"></div>
+      <div class="name">Juli Savioli</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span><span class="tag">Fitness</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">2.5 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">8.9 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image3.png')"></div>
+      <div class="name">Pia Scarnato</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1.1 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">2.1 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image6.png')"></div>
+      <div class="name">Dulce Pink</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">2.5 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image9.png')"></div>
+      <div class="name">Renata Blasevich</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">324 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">2 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image10.png')"></div>
+      <div class="name">Giuli Bellicoso</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">252 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">748 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image15.png')"></div>
+      <div class="name">Maca Castro</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">70 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">521 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image16.png')"></div>
+      <div class="name">Pauli Veltrano</div>
+      <div class="tagrow"><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">286 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">488 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image17.png')"></div>
+      <div class="name">Agustina Cambra</div>
+      <div class="tagrow"><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">35.4 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">2 M</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">4</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Mujeres</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image18.png')"></div>
+      <div class="name">Eve Vidal</div>
+      <div class="tagrow"><span class="tag">Cocina</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">384 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">s/d</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image20.png')"></div>
+      <div class="name">Inez</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">123 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">465 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image21.png')"></div>
+      <div class="name">Mumy</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">91 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">447 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image26.png')"></div>
+      <div class="name">Ammichis</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">13.5 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">186 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image28.png')"></div>
+      <div class="name">Giuli Lourdes</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">316 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">872 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image29.png')"></div>
+      <div class="name">Mely Francano</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">154 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">434 K*</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image30.png')"></div>
+      <div class="name">Martu Morales</div>
+      <div class="tagrow"><span class="tag">Trend</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">2.3 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">7.2 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image36.png')"></div>
+      <div class="name">Nanu Yael</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">202 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">1.8 M</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">5</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Mujeres</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image41.png')"></div>
+      <div class="name">Sabri Ludmila</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">379 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">764 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo photo-placeholder"></div>
+      <div class="name">Yo Soy Brisa</div>
+      <div class="tagrow"><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">762 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">1.5 M</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">6</span>
+    </div>
+    </div>
+
+    <div class="page divider-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:78%;top:60%;transform:translate(-50%,-50%);opacity:0.55;filter:brightness(1.7);">
+      <div class="divider-title"><em>Hombres</em></div>
+      <svg class="isotipo-mark small" viewBox="0 0 1080 1080"><path fill="currentColor" d="M 724.683594 551.480469 L 724.261719 549.105469 C 715.742188 493.085938 650.066406 457.632812 598.066406 483.089844 C 516.671875 515.761719 458.914062 596.804688 458.984375 688.710938 C 458.988281 691.921875 458.265625 695.132812 456.59375 697.875 C 448.285156 711.496094 424.472656 708.839844 420.085938 692.992188 C 419.34375 690.308594 419.332031 687.472656 419.84375 684.734375 C 440.027344 576.277344 523.398438 484.042969 625.621094 444.773438 C 626.273438 444.488281 626.917969 444.179688 627.550781 443.847656 C 675.449219 415.460938 659.902344 334.273438 604.042969 326.5 C 600.253906 325.796875 596.359375 325.433594 592.375 325.433594 L 347.835938 325.433594 L 347.835938 754.566406 L 725.578125 754.566406 C 724.902344 746.117188 726.941406 563.613281 724.683594 551.480469 "/></svg>
+      <div class="divider-pageno">07</div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">7</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Hombres</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image1.png')"></div>
+      <div class="name">Pelao Khe</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">3 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">5.6 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image4.png')"></div>
+      <div class="name">Benja Calero</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Youtuber</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1.1 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">6.2 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image5.png')"></div>
+      <div class="name">Cris Pierri</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">936 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">3.3 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image7.png')"></div>
+      <div class="name">Hablemos de Cine</div>
+      <div class="tagrow"><span class="tag">Cine</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">845 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">537 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image8.png')"></div>
+      <div class="name">Ber Scarnato</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">432 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">742 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image11.png')"></div>
+      <div class="name">Mariano Bondar</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Youtuber</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">802 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">434 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image12.png')"></div>
+      <div class="name">Inachomer</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Entrevistas</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">749 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">3.1 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image13.png')"></div>
+      <div class="name">Santi Gallo</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">259 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">668 K</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">8</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Hombres</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image14.png')"></div>
+      <div class="name">Tiago Bergallo</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Trends</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">141 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">616 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image19.png')"></div>
+      <div class="name">Pablo Bruschi</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Youtuber</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1.7 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">15.2 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image22.png')"></div>
+      <div class="name">Joselo Marquez</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">298 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">946 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image23.png')"></div>
+      <div class="name">Bruno Rondini</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Actor</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">127 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">92.4 K*</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image24.png')"></div>
+      <div class="name">Lubru Invierte</div>
+      <div class="tagrow"><span class="tag">Finanzas</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">269 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">567 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image25.png')"></div>
+      <div class="name">Los Arias Brothers</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1.3 K*</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">5.4 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image27.png')"></div>
+      <div class="name">Facu Garcia</div>
+      <div class="tagrow"><span class="tag">F1</span><span class="tag">Locutor</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">104 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">23.3 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image31.png')"></div>
+      <div class="name">Lean Riccio</div>
+      <div class="tagrow"><span class="tag">Abogado</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">358 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">846 K</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">9</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Hombres</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image32.png')"></div>
+      <div class="name">Tomas Alvarez</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1.2 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">3 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image33.png')"></div>
+      <div class="name">Fran Silva</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">344 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">2.5 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image34.png')"></div>
+      <div class="name">El Capo Willy</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1.1 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">1 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image35.png')"></div>
+      <div class="name">Agus Benca</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Bailarin</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">295 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">703 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image37.png')"></div>
+      <div class="name">Gena Pedrazzi</div>
+      <div class="tagrow"><span class="tag">Fitness</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">59.3 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">185 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image38.png')"></div>
+      <div class="name">Lucas Monopoli</div>
+      <div class="tagrow"><span class="tag">Fitness</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">76 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">173 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image39.png')"></div>
+      <div class="name">Soy Dalto</div>
+      <div class="tagrow"><span class="tag">Tecnología</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">165 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">1.4 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image40.png')"></div>
+      <div class="name">Nico Grasso</div>
+      <div class="tagrow"><span class="tag">Fitness</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">23.2 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">19 K</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">10</span>
+    </div>
+    </div>
+
+    <div class="page divider-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:78%;top:60%;transform:translate(-50%,-50%);opacity:0.55;filter:brightness(1.7);">
+      <div class="divider-title"><em>Lifestyle</em></div>
+      <svg class="isotipo-mark small" viewBox="0 0 1080 1080"><path fill="currentColor" d="M 724.683594 551.480469 L 724.261719 549.105469 C 715.742188 493.085938 650.066406 457.632812 598.066406 483.089844 C 516.671875 515.761719 458.914062 596.804688 458.984375 688.710938 C 458.988281 691.921875 458.265625 695.132812 456.59375 697.875 C 448.285156 711.496094 424.472656 708.839844 420.085938 692.992188 C 419.34375 690.308594 419.332031 687.472656 419.84375 684.734375 C 440.027344 576.277344 523.398438 484.042969 625.621094 444.773438 C 626.273438 444.488281 626.917969 444.179688 627.550781 443.847656 C 675.449219 415.460938 659.902344 334.273438 604.042969 326.5 C 600.253906 325.796875 596.359375 325.433594 592.375 325.433594 L 347.835938 325.433594 L 347.835938 754.566406 L 725.578125 754.566406 C 724.902344 746.117188 726.941406 563.613281 724.683594 551.480469 "/></svg>
+      <div class="divider-pageno">11</div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">11</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Lifestyle</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image3.png')"></div>
+      <div class="name">Pia Scarnato</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1.1 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">2.1 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image5.png')"></div>
+      <div class="name">Cris Pierri</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">936 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">3.3 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image6.png')"></div>
+      <div class="name">Dulce Pink</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">2.5 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image8.png')"></div>
+      <div class="name">Ber Scarnato</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">432 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">742 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image9.png')"></div>
+      <div class="name">Renata Blasevich</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">324 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">2 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image10.png')"></div>
+      <div class="name">Giuli Bellicoso</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">252 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">748 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image12.png')"></div>
+      <div class="name">Inachomer</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Entrevistas</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">749 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">3.1 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image13.png')"></div>
+      <div class="name">Santi Gallo</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">259 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">668 K</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">12</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Lifestyle</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image14.png')"></div>
+      <div class="name">Tiago Bergallo</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Trends</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">141 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">616 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image15.png')"></div>
+      <div class="name">Maca Castro</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">70 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">521 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image16.png')"></div>
+      <div class="name">Pauli Veltrano</div>
+      <div class="tagrow"><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">286 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">488 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image17.png')"></div>
+      <div class="name">Agustina Cambra</div>
+      <div class="tagrow"><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">35.4 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">2 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image18.png')"></div>
+      <div class="name">Eve Vidal</div>
+      <div class="tagrow"><span class="tag">Cocina</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">384 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">s/d</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image20.png')"></div>
+      <div class="name">Inez</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">123 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">465 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image21.png')"></div>
+      <div class="name">Mumy</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">91 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">447 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image22.png')"></div>
+      <div class="name">Joselo Marquez</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">298 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">946 K</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">13</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Lifestyle</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image26.png')"></div>
+      <div class="name">Ammichis</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">13.5 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">186 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image28.png')"></div>
+      <div class="name">Giuli Lourdes</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">316 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">872 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image29.png')"></div>
+      <div class="name">Mely Francano</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">154 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">434 K*</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image30.png')"></div>
+      <div class="name">Martu Morales</div>
+      <div class="tagrow"><span class="tag">Trend</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">2.3 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">7.2 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image32.png')"></div>
+      <div class="name">Tomas Alvarez</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1.2 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">3 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image33.png')"></div>
+      <div class="name">Fran Silva</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">344 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">2.5 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image35.png')"></div>
+      <div class="name">Agus Benca</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Bailarin</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">295 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">703 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo photo-placeholder"></div>
+      <div class="name">Yo Soy Brisa</div>
+      <div class="tagrow"><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">762 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">1.5 M</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">14</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Lifestyle</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image37.png')"></div>
+      <div class="name">Gena Pedrazzi</div>
+      <div class="tagrow"><span class="tag">Fitness</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">59.3 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">185 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image38.png')"></div>
+      <div class="name">Lucas Monopoli</div>
+      <div class="tagrow"><span class="tag">Fitness</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">76 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">173 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image40.png')"></div>
+      <div class="name">Nico Grasso</div>
+      <div class="tagrow"><span class="tag">Fitness</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">23.2 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">19 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image36.png')"></div>
+      <div class="name">Nanu Yael</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">202 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">1.8 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image41.png')"></div>
+      <div class="name">Sabri Ludmila</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">379 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">764 K</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">15</span>
+    </div>
+    </div>
+
+    <div class="page divider-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:78%;top:60%;transform:translate(-50%,-50%);opacity:0.55;filter:brightness(1.7);">
+      <div class="divider-title"><em>Beauty &amp; Makeup</em></div>
+      <svg class="isotipo-mark small" viewBox="0 0 1080 1080"><path fill="currentColor" d="M 724.683594 551.480469 L 724.261719 549.105469 C 715.742188 493.085938 650.066406 457.632812 598.066406 483.089844 C 516.671875 515.761719 458.914062 596.804688 458.984375 688.710938 C 458.988281 691.921875 458.265625 695.132812 456.59375 697.875 C 448.285156 711.496094 424.472656 708.839844 420.085938 692.992188 C 419.34375 690.308594 419.332031 687.472656 419.84375 684.734375 C 440.027344 576.277344 523.398438 484.042969 625.621094 444.773438 C 626.273438 444.488281 626.917969 444.179688 627.550781 443.847656 C 675.449219 415.460938 659.902344 334.273438 604.042969 326.5 C 600.253906 325.796875 596.359375 325.433594 592.375 325.433594 L 347.835938 325.433594 L 347.835938 754.566406 L 725.578125 754.566406 C 724.902344 746.117188 726.941406 563.613281 724.683594 551.480469 "/></svg>
+      <div class="divider-pageno">16</div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">16</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Beauty &amp; Makeup</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image3.png')"></div>
+      <div class="name">Pia Scarnato</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1.1 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">2.1 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image6.png')"></div>
+      <div class="name">Dulce Pink</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">2.5 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image10.png')"></div>
+      <div class="name">Giuli Bellicoso</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">252 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">748 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image15.png')"></div>
+      <div class="name">Maca Castro</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">70 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">521 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image28.png')"></div>
+      <div class="name">Giuli Lourdes</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">316 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">872 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image29.png')"></div>
+      <div class="name">Mely Francano</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">154 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">434 K*</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo photo-placeholder"></div>
+      <div class="name">Yo Soy Brisa</div>
+      <div class="tagrow"><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">762 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">1.5 M</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">17</span>
+    </div>
+    </div>
+
+    <div class="page divider-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:78%;top:60%;transform:translate(-50%,-50%);opacity:0.55;filter:brightness(1.7);">
+      <div class="divider-title"><em>Trends</em></div>
+      <svg class="isotipo-mark small" viewBox="0 0 1080 1080"><path fill="currentColor" d="M 724.683594 551.480469 L 724.261719 549.105469 C 715.742188 493.085938 650.066406 457.632812 598.066406 483.089844 C 516.671875 515.761719 458.914062 596.804688 458.984375 688.710938 C 458.988281 691.921875 458.265625 695.132812 456.59375 697.875 C 448.285156 711.496094 424.472656 708.839844 420.085938 692.992188 C 419.34375 690.308594 419.332031 687.472656 419.84375 684.734375 C 440.027344 576.277344 523.398438 484.042969 625.621094 444.773438 C 626.273438 444.488281 626.917969 444.179688 627.550781 443.847656 C 675.449219 415.460938 659.902344 334.273438 604.042969 326.5 C 600.253906 325.796875 596.359375 325.433594 592.375 325.433594 L 347.835938 325.433594 L 347.835938 754.566406 L 725.578125 754.566406 C 724.902344 746.117188 726.941406 563.613281 724.683594 551.480469 "/></svg>
+      <div class="divider-pageno">18</div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">18</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Trends</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image3.png')"></div>
+      <div class="name">Pia Scarnato</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1.1 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">2.1 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image6.png')"></div>
+      <div class="name">Dulce Pink</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">2.5 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image10.png')"></div>
+      <div class="name">Giuli Bellicoso</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">252 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">748 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image15.png')"></div>
+      <div class="name">Maca Castro</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">70 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">521 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image26.png')"></div>
+      <div class="name">Ammichis</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">13.5 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">186 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image28.png')"></div>
+      <div class="name">Giuli Lourdes</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">316 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">872 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image29.png')"></div>
+      <div class="name">Mely Francano</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">154 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">434 K*</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image30.png')"></div>
+      <div class="name">Martu Morales</div>
+      <div class="tagrow"><span class="tag">Trend</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">2.3 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">7.2 M</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">19</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Trends</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image14.png')"></div>
+      <div class="name">Tiago Bergallo</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Trends</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">141 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">616 K</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">20</span>
+    </div>
+    </div>
+
+    <div class="page divider-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:78%;top:60%;transform:translate(-50%,-50%);opacity:0.55;filter:brightness(1.7);">
+      <div class="divider-title"><em>Fitness</em></div>
+      <svg class="isotipo-mark small" viewBox="0 0 1080 1080"><path fill="currentColor" d="M 724.683594 551.480469 L 724.261719 549.105469 C 715.742188 493.085938 650.066406 457.632812 598.066406 483.089844 C 516.671875 515.761719 458.914062 596.804688 458.984375 688.710938 C 458.988281 691.921875 458.265625 695.132812 456.59375 697.875 C 448.285156 711.496094 424.472656 708.839844 420.085938 692.992188 C 419.34375 690.308594 419.332031 687.472656 419.84375 684.734375 C 440.027344 576.277344 523.398438 484.042969 625.621094 444.773438 C 626.273438 444.488281 626.917969 444.179688 627.550781 443.847656 C 675.449219 415.460938 659.902344 334.273438 604.042969 326.5 C 600.253906 325.796875 596.359375 325.433594 592.375 325.433594 L 347.835938 325.433594 L 347.835938 754.566406 L 725.578125 754.566406 C 724.902344 746.117188 726.941406 563.613281 724.683594 551.480469 "/></svg>
+      <div class="divider-pageno">21</div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">21</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Fitness</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image1.png')"></div>
+      <div class="name">Pelao Khe</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">3 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">5.6 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image2.png')"></div>
+      <div class="name">Juli Savioli</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span><span class="tag">Fitness</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">2.5 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">8.9 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image37.png')"></div>
+      <div class="name">Gena Pedrazzi</div>
+      <div class="tagrow"><span class="tag">Fitness</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">59.3 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">185 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image38.png')"></div>
+      <div class="name">Lucas Monopoli</div>
+      <div class="tagrow"><span class="tag">Fitness</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">76 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">173 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image40.png')"></div>
+      <div class="name">Nico Grasso</div>
+      <div class="tagrow"><span class="tag">Fitness</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">23.2 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">19 K</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">22</span>
+    </div>
+    </div>
+
+    <div class="page divider-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:78%;top:60%;transform:translate(-50%,-50%);opacity:0.55;filter:brightness(1.7);">
+      <div class="divider-title"><em>Humor &amp; Sketches</em></div>
+      <svg class="isotipo-mark small" viewBox="0 0 1080 1080"><path fill="currentColor" d="M 724.683594 551.480469 L 724.261719 549.105469 C 715.742188 493.085938 650.066406 457.632812 598.066406 483.089844 C 516.671875 515.761719 458.914062 596.804688 458.984375 688.710938 C 458.988281 691.921875 458.265625 695.132812 456.59375 697.875 C 448.285156 711.496094 424.472656 708.839844 420.085938 692.992188 C 419.34375 690.308594 419.332031 687.472656 419.84375 684.734375 C 440.027344 576.277344 523.398438 484.042969 625.621094 444.773438 C 626.273438 444.488281 626.917969 444.179688 627.550781 443.847656 C 675.449219 415.460938 659.902344 334.273438 604.042969 326.5 C 600.253906 325.796875 596.359375 325.433594 592.375 325.433594 L 347.835938 325.433594 L 347.835938 754.566406 L 725.578125 754.566406 C 724.902344 746.117188 726.941406 563.613281 724.683594 551.480469 "/></svg>
+      <div class="divider-pageno">23</div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">23</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Humor &amp; Sketches</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image1.png')"></div>
+      <div class="name">Pelao Khe</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">3 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">5.6 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image2.png')"></div>
+      <div class="name">Juli Savioli</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span><span class="tag">Fitness</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">2.5 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">8.9 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image4.png')"></div>
+      <div class="name">Benja Calero</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Youtuber</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1.1 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">6.2 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image5.png')"></div>
+      <div class="name">Cris Pierri</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">936 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">3.3 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image6.png')"></div>
+      <div class="name">Dulce Pink</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">2.5 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image8.png')"></div>
+      <div class="name">Ber Scarnato</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">432 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">742 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image9.png')"></div>
+      <div class="name">Renata Blasevich</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">324 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">2 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image10.png')"></div>
+      <div class="name">Giuli Bellicoso</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">252 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">748 K</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">24</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Humor &amp; Sketches</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image11.png')"></div>
+      <div class="name">Mariano Bondar</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Youtuber</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">802 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">434 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image12.png')"></div>
+      <div class="name">Inachomer</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Entrevistas</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">749 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">3.1 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image13.png')"></div>
+      <div class="name">Santi Gallo</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">259 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">668 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image14.png')"></div>
+      <div class="name">Tiago Bergallo</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Trends</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">141 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">616 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image19.png')"></div>
+      <div class="name">Pablo Bruschi</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Youtuber</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1.7 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">15.2 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image20.png')"></div>
+      <div class="name">Inez</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">123 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">465 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image21.png')"></div>
+      <div class="name">Mumy</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">91 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">447 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image22.png')"></div>
+      <div class="name">Joselo Marquez</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">298 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">946 K</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">25</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Humor &amp; Sketches</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image25.png')"></div>
+      <div class="name">Los Arias Brothers</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1.3 K*</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">5.4 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image26.png')"></div>
+      <div class="name">Ammichis</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">13.5 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">186 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image28.png')"></div>
+      <div class="name">Giuli Lourdes</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">316 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">872 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image29.png')"></div>
+      <div class="name">Mely Francano</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">154 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">434 K*</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image32.png')"></div>
+      <div class="name">Tomas Alvarez</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1.2 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">3 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image33.png')"></div>
+      <div class="name">Fran Silva</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">344 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">2.5 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image34.png')"></div>
+      <div class="name">El Capo Willy</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1.1 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">1 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image35.png')"></div>
+      <div class="name">Agus Benca</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Bailarin</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">295 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">703 K</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">26</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Humor &amp; Sketches</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image36.png')"></div>
+      <div class="name">Nanu Yael</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">202 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">1.8 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image23.png')"></div>
+      <div class="name">Bruno Rondini</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Actor</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">127 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">92.4 K*</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">27</span>
+    </div>
+    </div>
+
+    <div class="page divider-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:78%;top:60%;transform:translate(-50%,-50%);opacity:0.55;filter:brightness(1.7);">
+      <div class="divider-title"><em>Entretenimiento</em></div>
+      <svg class="isotipo-mark small" viewBox="0 0 1080 1080"><path fill="currentColor" d="M 724.683594 551.480469 L 724.261719 549.105469 C 715.742188 493.085938 650.066406 457.632812 598.066406 483.089844 C 516.671875 515.761719 458.914062 596.804688 458.984375 688.710938 C 458.988281 691.921875 458.265625 695.132812 456.59375 697.875 C 448.285156 711.496094 424.472656 708.839844 420.085938 692.992188 C 419.34375 690.308594 419.332031 687.472656 419.84375 684.734375 C 440.027344 576.277344 523.398438 484.042969 625.621094 444.773438 C 626.273438 444.488281 626.917969 444.179688 627.550781 443.847656 C 675.449219 415.460938 659.902344 334.273438 604.042969 326.5 C 600.253906 325.796875 596.359375 325.433594 592.375 325.433594 L 347.835938 325.433594 L 347.835938 754.566406 L 725.578125 754.566406 C 724.902344 746.117188 726.941406 563.613281 724.683594 551.480469 "/></svg>
+      <div class="divider-pageno">28</div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">28</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Entretenimiento</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image1.png')"></div>
+      <div class="name">Pelao Khe</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">3 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">5.6 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image2.png')"></div>
+      <div class="name">Juli Savioli</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span><span class="tag">Fitness</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">2.5 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">8.9 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image3.png')"></div>
+      <div class="name">Pia Scarnato</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1.1 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">2.1 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image4.png')"></div>
+      <div class="name">Benja Calero</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Youtuber</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1.1 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">6.2 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image5.png')"></div>
+      <div class="name">Cris Pierri</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">936 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">3.3 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image6.png')"></div>
+      <div class="name">Dulce Pink</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">2.5 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image8.png')"></div>
+      <div class="name">Ber Scarnato</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">432 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">742 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image9.png')"></div>
+      <div class="name">Renata Blasevich</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">324 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">2 M</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">29</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Entretenimiento</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image10.png')"></div>
+      <div class="name">Giuli Bellicoso</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">252 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">748 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image11.png')"></div>
+      <div class="name">Mariano Bondar</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Youtuber</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">802 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">434 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image12.png')"></div>
+      <div class="name">Inachomer</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Entrevistas</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">749 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">3.1 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image13.png')"></div>
+      <div class="name">Santi Gallo</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">259 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">668 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image14.png')"></div>
+      <div class="name">Tiago Bergallo</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Trends</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">141 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">616 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image19.png')"></div>
+      <div class="name">Pablo Bruschi</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Youtuber</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1.7 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">15.2 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image20.png')"></div>
+      <div class="name">Inez</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">123 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">465 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image21.png')"></div>
+      <div class="name">Mumy</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">91 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">447 K</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">30</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Entretenimiento</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image22.png')"></div>
+      <div class="name">Joselo Marquez</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">298 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">946 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image23.png')"></div>
+      <div class="name">Bruno Rondini</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Actor</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">127 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">92.4 K*</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image25.png')"></div>
+      <div class="name">Los Arias Brothers</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1.3 K*</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">5.4 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image26.png')"></div>
+      <div class="name">Ammichis</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">13.5 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">186 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image28.png')"></div>
+      <div class="name">Giuli Lourdes</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">316 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">872 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image36.png')"></div>
+      <div class="name">Nanu Yael</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">202 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">1.8 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image29.png')"></div>
+      <div class="name">Mely Francano</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">154 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">434 K*</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image32.png')"></div>
+      <div class="name">Tomas Alvarez</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1.2 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">3 M</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">31</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Entretenimiento</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image33.png')"></div>
+      <div class="name">Fran Silva</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">344 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">2.5 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image34.png')"></div>
+      <div class="name">El Capo Willy</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Sketch</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1.1 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">1 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image35.png')"></div>
+      <div class="name">Agus Benca</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Bailarin</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">295 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">703 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image7.png')"></div>
+      <div class="name">Hablemos de Cine</div>
+      <div class="tagrow"><span class="tag">Cine</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">845 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">537 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image27.png')"></div>
+      <div class="name">Facu Garcia</div>
+      <div class="tagrow"><span class="tag">F1</span><span class="tag">Locutor</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">104 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">23.3 K</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">32</span>
+    </div>
+    </div>
+
+    <div class="page divider-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:78%;top:60%;transform:translate(-50%,-50%);opacity:0.55;filter:brightness(1.7);">
+      <div class="divider-title"><em>Foodie</em></div>
+      <svg class="isotipo-mark small" viewBox="0 0 1080 1080"><path fill="currentColor" d="M 724.683594 551.480469 L 724.261719 549.105469 C 715.742188 493.085938 650.066406 457.632812 598.066406 483.089844 C 516.671875 515.761719 458.914062 596.804688 458.984375 688.710938 C 458.988281 691.921875 458.265625 695.132812 456.59375 697.875 C 448.285156 711.496094 424.472656 708.839844 420.085938 692.992188 C 419.34375 690.308594 419.332031 687.472656 419.84375 684.734375 C 440.027344 576.277344 523.398438 484.042969 625.621094 444.773438 C 626.273438 444.488281 626.917969 444.179688 627.550781 443.847656 C 675.449219 415.460938 659.902344 334.273438 604.042969 326.5 C 600.253906 325.796875 596.359375 325.433594 592.375 325.433594 L 347.835938 325.433594 L 347.835938 754.566406 L 725.578125 754.566406 C 724.902344 746.117188 726.941406 563.613281 724.683594 551.480469 "/></svg>
+      <div class="divider-pageno">33</div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">33</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Foodie</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image18.png')"></div>
+      <div class="name">Eve Vidal</div>
+      <div class="tagrow"><span class="tag">Cocina</span><span class="tag">Lifestyle</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">384 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">s/d</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">34</span>
+    </div>
+    </div>
+
+    <div class="page divider-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:78%;top:60%;transform:translate(-50%,-50%);opacity:0.55;filter:brightness(1.7);">
+      <div class="divider-title"><em>Youtube</em></div>
+      <svg class="isotipo-mark small" viewBox="0 0 1080 1080"><path fill="currentColor" d="M 724.683594 551.480469 L 724.261719 549.105469 C 715.742188 493.085938 650.066406 457.632812 598.066406 483.089844 C 516.671875 515.761719 458.914062 596.804688 458.984375 688.710938 C 458.988281 691.921875 458.265625 695.132812 456.59375 697.875 C 448.285156 711.496094 424.472656 708.839844 420.085938 692.992188 C 419.34375 690.308594 419.332031 687.472656 419.84375 684.734375 C 440.027344 576.277344 523.398438 484.042969 625.621094 444.773438 C 626.273438 444.488281 626.917969 444.179688 627.550781 443.847656 C 675.449219 415.460938 659.902344 334.273438 604.042969 326.5 C 600.253906 325.796875 596.359375 325.433594 592.375 325.433594 L 347.835938 325.433594 L 347.835938 754.566406 L 725.578125 754.566406 C 724.902344 746.117188 726.941406 563.613281 724.683594 551.480469 "/></svg>
+      <div class="divider-pageno">35</div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">35</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Youtube</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image4.png')"></div>
+      <div class="name">Benja Calero</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Youtuber</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">1.1 M</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">6.2 M</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image11.png')"></div>
+      <div class="name">Mariano Bondar</div>
+      <div class="tagrow"><span class="tag">Humor</span><span class="tag">Youtuber</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">802 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">434 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image31.png')"></div>
+      <div class="name">Lean Riccio</div>
+      <div class="tagrow"><span class="tag">Abogado</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">358 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">846 K</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">36</span>
+    </div>
+    </div>
+
+    <div class="page divider-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:78%;top:60%;transform:translate(-50%,-50%);opacity:0.55;filter:brightness(1.7);">
+      <div class="divider-title"><em>Tecnología &amp; Crypto</em></div>
+      <svg class="isotipo-mark small" viewBox="0 0 1080 1080"><path fill="currentColor" d="M 724.683594 551.480469 L 724.261719 549.105469 C 715.742188 493.085938 650.066406 457.632812 598.066406 483.089844 C 516.671875 515.761719 458.914062 596.804688 458.984375 688.710938 C 458.988281 691.921875 458.265625 695.132812 456.59375 697.875 C 448.285156 711.496094 424.472656 708.839844 420.085938 692.992188 C 419.34375 690.308594 419.332031 687.472656 419.84375 684.734375 C 440.027344 576.277344 523.398438 484.042969 625.621094 444.773438 C 626.273438 444.488281 626.917969 444.179688 627.550781 443.847656 C 675.449219 415.460938 659.902344 334.273438 604.042969 326.5 C 600.253906 325.796875 596.359375 325.433594 592.375 325.433594 L 347.835938 325.433594 L 347.835938 754.566406 L 725.578125 754.566406 C 724.902344 746.117188 726.941406 563.613281 724.683594 551.480469 "/></svg>
+      <div class="divider-pageno">37</div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">37</span>
+    </div>
+    </div>
+
+    <div class="page grid-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:6%;top:95%;transform:translate(-50%,-50%);opacity:0.35;filter:brightness(1.7);">
+      <div class="grid-header">
+        <div class="grid-title">Tecnología &amp; Crypto</div>
+      </div>
+      <div class="grid">
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image24.png')"></div>
+      <div class="name">Lubru Invierte</div>
+      <div class="tagrow"><span class="tag">Finanzas</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">269 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">567 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image31.png')"></div>
+      <div class="name">Lean Riccio</div>
+      <div class="tagrow"><span class="tag">Abogado</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">358 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">846 K</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo" style="background-image:url('assets/photos/image39.png')"></div>
+      <div class="name">Soy Dalto</div>
+      <div class="tagrow"><span class="tag">Tecnología</span></div>
+      <div class="statrow">
+        <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">165 K</span></div>
+        <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">1.4 M</span></div>
+      </div>
+    </div></div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">38</span>
+    </div>
+    </div>
+
+    <div class="page contacto-page">
+      <img class="recurso" src="assets/recursos/Recurso 2.svg" style="width:3600px;left:80%;top:50%;transform:translate(-50%,-50%);opacity:0.5;filter:brightness(1.7);">
+      <div class="divider-title" style="font-size:96px;"><em>Contacto</em></div>
+      <svg class="isotipo-mark small" viewBox="0 0 1080 1080"><path fill="currentColor" d="M 724.683594 551.480469 L 724.261719 549.105469 C 715.742188 493.085938 650.066406 457.632812 598.066406 483.089844 C 516.671875 515.761719 458.914062 596.804688 458.984375 688.710938 C 458.988281 691.921875 458.265625 695.132812 456.59375 697.875 C 448.285156 711.496094 424.472656 708.839844 420.085938 692.992188 C 419.34375 690.308594 419.332031 687.472656 419.84375 684.734375 C 440.027344 576.277344 523.398438 484.042969 625.621094 444.773438 C 626.273438 444.488281 626.917969 444.179688 627.550781 443.847656 C 675.449219 415.460938 659.902344 334.273438 604.042969 326.5 C 600.253906 325.796875 596.359375 325.433594 592.375 325.433594 L 347.835938 325.433594 L 347.835938 754.566406 L 725.578125 754.566406 C 724.902344 746.117188 726.941406 563.613281 724.683594 551.480469 "/></svg>
+      <div class="contacto-content">
+        <div class="contacto-item"><span class="contacto-label">e-mail</span><span class="contacto-value">contacto@bigagency.com.ar</span></div>
+        <div class="contacto-item"><span class="contacto-label">whatsapp</span><span class="contacto-value">+54 9 11 5336-3012 &nbsp;|&nbsp; +54 9 11 7365-8322</span></div>
+        <div class="contacto-item"><span class="contacto-label">instagram</span><span class="contacto-value">@bigagencyar</span></div>
+        <div class="contacto-item"><span class="contacto-label">tik tok</span><span class="contacto-value">@bigagencyar</span></div>
+        <div class="contacto-item"><span class="contacto-label">linkedin</span><span class="contacto-value">Big Agency</span></div>
+      </div>
+      
+    <div class="pagefooter">
+      <span class="footer-center">2026</span>
+      <span class="footer-right">39</span>
+    </div>
+    </div>
+</body>
+</html>
