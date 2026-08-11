@@ -6,26 +6,37 @@ FOTOS = "/Users/tomascardozo/main/big/fotos"
 OUT = os.path.dirname(__file__)
 
 # maca_castro and ammichis excluded from every roster appearance (client request)
+# tuple: (id, name, photo, tags, ig_followers, tt_followers, ig_handle, tt_handle)
 PEOPLE = [
-    ("pia_scarnato", "Pía Scarnato", "Pia Scarnato/_DSC6098.jpg", ["Humor", "Lifestyle"], "1.1 M", "2.1 M"),
-    ("dulce_pink", "Dulce Pink", "Dulce Pink f/572711958_18534878179053734_5588458490720228584_n.jpg", ["Humor", "Lifestyle"], "1 M", "2.5 M"),
-    ("giuli_bellicoso", "Giuli Bellicoso", "Giuli Bellicoso - w/WhatsApp Image 2026-04-28 at 11.32.45 AM.jpeg", ["Humor", "Sketch"], "252 K", "748 K"),
-    ("giuli_lourdes", "Giuli Lourdes", "giuli Lourdes- w/IMG_0539.JPG.jpeg", ["Humor", "Lifestyle"], "316 K", "872 K"),
-    ("mely_francano", "Mely Francano", "Mely Francano f/mely 1.jpg", ["Humor", "Sketch"], "154 K", "434 K"),
-    ("martu_morales", "Martu Morales", "Martu Morales f/martu 2.jpg", ["Trend", "Lifestyle"], "2.3 M", "7.2 M"),
-    ("tiago_bergallo", "Tiago Bergallo", "Tiago Bergallo f/thiago 1.jpg", ["Humor", "Trends"], "141 K", "616 K"),
+    ("pia_scarnato", "Pía Scarnato", "Pia Scarnato/_DSC6098.jpg", ["Humor", "Lifestyle"], "1.1 M", "2.1 M", "@piascarnato", "@piascarnato.ok"),
+    ("dulce_pink", "Dulce Pink", "Dulce Pink f/572711958_18534878179053734_5588458490720228584_n.jpg", ["Humor", "Lifestyle"], "1 M", "2.5 M", "@_dulcepink_", "@_dulcepink_"),
+    ("giuli_bellicoso", "Giuli Bellicoso", "Giuli Bellicoso - w/WhatsApp Image 2026-04-28 at 11.32.45 AM.jpeg", ["Humor", "Sketch"], "252 K", "748 K", "@giuli.bellicoso", "@giuli.bellicoso"),
+    ("giuli_lourdes", "Giuli Lourdes", "giuli Lourdes- w/IMG_0539.JPG.jpeg", ["Humor", "Lifestyle"], "316 K", "872 K", "@giulilourdes", "@giulianalourdes"),
+    ("mely_francano", "Mely Francano", "Mely Francano f/mely 1.jpg", ["Humor", "Sketch"], "154 K", "434 K", "@melyfrancanoo", "@melyfrancanoo"),
+    ("martu_morales", "Martu Morales", "Martu Morales f/martu 2.jpg", ["Trend", "Lifestyle"], "2.3 M", "7.2 M", "@martuumoraless", "@martumoralesok"),
+    ("tiago_bergallo", "Tiago Bergallo", "Tiago Bergallo f/thiago 1.jpg", ["Humor", "Trends"], "141 K", "616 K", "@tiagobergallo", "@tiagobergallo"),
     # Mujeres (resto del grupo, sumado 2026-08-11)
-    ("juli_savioli", "Juli Savioli", "Juli Savioli/_DSC6207.jpg", ["Humor", "Sketch", "Fitness"], "2.5 M", "8.9 M"),
-    ("renata_blasevich", "Renata Blasevich", "Renata Blasevich -w/IMG_4897.JPG.jpeg", ["Humor", "Sketch"], "324 K", "2 M"),
-    ("pauli_veltrano", "Pauli Veltrano", "Pauli /Paulina Vetrano -  PP", ["Lifestyle"], "286 K", "488 K"),
-    ("agustina_cambra", "Agustina Cambra", "Agus Fc f/640377109_18389442175144335_5777850493703203233_n.jpg", ["Lifestyle"], "35.4 K", "2 M"),
-    ("eve_vidal", "Eve Vidal", "Eve-w/WhatsApp Image 2026-06-30 at 1.30.47 PM.jpeg", ["Cocina", "Lifestyle"], "384 K", "360.6 K"),
-    ("inez", "Inez", "Inez f/inezz.jpg", ["Humor", "Lifestyle"], "123 K", "465 K"),
-    ("mumy", "Mumy", "Mumy Ratibel f/mumy.jpg", ["Humor", "Lifestyle"], "91 K", "447 K"),
-    ("nanu_yael", "Nanu Yael", "Nanu Yael f/nanu 2.jpg", ["Humor", "Lifestyle"], "202 K", "1.8 M"),
-    ("sabri_ludmila", "Sabri Ludmila", "Sabri Ludmila f/sabri.jpg", ["Humor", "Lifestyle"], "379 K", "764 K"),
-    ("yo_soy_brisa", "Yo Soy Brisa", "Yo soy Brisa f/brisa 1.jpg", ["Lifestyle"], "762 K", "1.5 M"),
+    ("juli_savioli", "Juli Savioli", "Juli Savioli/_DSC6207.jpg", ["Humor", "Sketch", "Fitness"], "2.5 M", "8.9 M", "@julisavioli", "@julisavioli"),
+    ("renata_blasevich", "Renata Blasevich", "Renata Blasevich -w/IMG_4897.JPG.jpeg", ["Humor", "Sketch"], "324 K", "2 M", "@renatablasevich", "@renatablasevich"),
+    ("pauli_veltrano", "Pauli Veltrano", "Pauli /Paulina Vetrano -  PP", ["Lifestyle"], "286 K", "488 K", "@pauliveltrano", "@pauliveltrano"),
+    ("agustina_cambra", "Agustina Cambra", "Agus Fc f/640377109_18389442175144335_5777850493703203233_n.jpg", ["Lifestyle"], "35.4 K", "2 M", "@agusfc_", "@m.agusfc"),
+    ("eve_vidal", "Eve Vidal", "Eve-w/WhatsApp Image 2026-06-30 at 1.30.47 PM.jpeg", ["Cocina", "Lifestyle"], "384 K", "360.6 K", "@evecocinaybienestar", "@evecocinaybienestar"),
+    ("inez", "Inez", "Inez f/inezz.jpg", ["Humor", "Lifestyle"], "123 K", "465 K", "@inezzzzzita", "@inezzzzzita"),
+    ("mumy", "Mumy", "Mumy Ratibel f/mumy.jpg", ["Humor", "Lifestyle"], "91 K", "447 K", "@mumyratibel", "@mumyratibel"),
+    ("nanu_yael", "Nanu Yael", "Nanu Yael f/nanu 2.jpg", ["Humor", "Lifestyle"], "202 K", "1.8 M", "@nanu.yael", "@nanu.yael"),
+    ("sabri_ludmila", "Sabri Ludmila", "Sabri Ludmila f/sabri.jpg", ["Humor", "Lifestyle"], "379 K", "764 K", "@sabrinaludmila_", "@sabrina_ludmila"),
+    ("yo_soy_brisa", "Yo Soy Brisa", "Yo soy Brisa f/brisa 1.jpg", ["Lifestyle"], "762 K", "1.5 M", "@yosoybrisaa", "@yosoybrisaa"),
 ]
+
+HANDLE_URLS = json.load(open(os.path.join(OUT, "handle_urls.json")))
+
+def resolve_url(handle, platform):
+    key = handle.lstrip("@").strip().lower()
+    real = HANDLE_URLS.get(key, {}).get(platform)
+    if real:
+        return real
+    base = "https://www.instagram.com/" if platform == "instagram" else "https://www.tiktok.com/@"
+    return f'{base}{handle.lstrip("@").strip()}' + ("/" if platform == "instagram" else "")
 
 def to_data_uri(path, max_dim=900, quality=76):
     try:
@@ -50,11 +61,14 @@ def to_data_uri(path, max_dim=900, quality=76):
 
 data = {}
 total = 0
-for pid, name, relpath, tags, ig, tt in PEOPLE:
+for pid, name, relpath, tags, ig, tt, ig_h, tt_h in PEOPLE:
     full = os.path.join(FOTOS, relpath)
     uri, size = to_data_uri(full)
     total += size
-    data[pid] = dict(name=name, photo=uri, tags=tags, ig=ig, tt=tt)
+    data[pid] = dict(
+        name=name, photo=uri, tags=tags, ig=ig, tt=tt,
+        ig_url=resolve_url(ig_h, "instagram"), tt_url=resolve_url(tt_h, "tiktok"),
+    )
     print(f"{pid}: {size/1024:.0f}KB")
 
 print(f"TOTAL photos: {total/1024:.0f}KB")

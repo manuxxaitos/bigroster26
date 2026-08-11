@@ -55,8 +55,8 @@ def card_html(pid, i):
         <h3 class="card-name">{p["name"]}</h3>
         <div class="chip-row">{tags}</div>
         <div class="stat-row">
-          <div class="stat"><span class="stat-label">Instagram</span><span class="stat-value">{p["ig"]}</span></div>
-          <div class="stat"><span class="stat-label">TikTok</span><span class="stat-value">{p["tt"]}</span></div>
+          <a class="stat" href="{p["ig_url"]}" target="_blank" rel="noopener"><span class="stat-label">Instagram</span><span class="stat-value">{p["ig"]}</span></a>
+          <a class="stat" href="{p["tt_url"]}" target="_blank" rel="noopener"><span class="stat-label">TikTok</span><span class="stat-value">{p["tt"]}</span></a>
         </div>
       </div>
     </article>'''
@@ -302,7 +302,10 @@ body {{
   padding: 5px 10px; border-radius: 8px; letter-spacing: -0.01em;
 }}
 .stat-row {{ display: flex; gap: 8px; }}
-.stat {{ flex: 1; background: var(--naranja); border-radius: 12px; padding: 10px 12px; }}
+.stat {{
+  flex: 1; background: var(--naranja); border-radius: 12px; padding: 10px 12px;
+  text-decoration: none; color: inherit; pointer-events: auto;
+}}
 .stat-label {{ display: block; color: var(--lima); font-size: 10.5px; font-weight: 500; letter-spacing: -0.01em; }}
 .stat-value {{ display: block; color: var(--lima); font-size: 18px; font-weight: 700; letter-spacing: -0.03em; margin-top: 1px; }}
 
