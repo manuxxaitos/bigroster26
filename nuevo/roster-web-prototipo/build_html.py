@@ -267,7 +267,7 @@ body {{
 }}
 .cat-cover p {{
   margin-top: 26px; max-width: 460px; font-size: 19px; font-weight: 500;
-  line-height: 1.45; color: rgba(51,65,154,.75);
+  line-height: 1.45; color: var(--naranja);
   opacity: 0; transform: translateY(18px);
   animation: riseIn .7s cubic-bezier(.16,1,.3,1) .38s forwards;
 }}
