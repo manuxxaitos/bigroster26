@@ -50,7 +50,7 @@ def card_html(pid, i):
     tags = "".join(f'<span class="chip">{t}</span>' for t in p["tags"])
     return f'''
     <article class="card" style="--i:{i}">
-      <div class="card-photo" style="background-image:url('{p["photo"]}')"></div>
+      <img class="card-photo" src="{p["photo"]}" alt="{p["name"]}" loading="lazy" decoding="async" width="250" height="250">
       <div class="card-body">
         <h3 class="card-name">{p["name"]}</h3>
         <div class="chip-row">{tags}</div>
@@ -63,7 +63,7 @@ def card_html(pid, i):
 
 def collage_html(ids):
     return "".join(
-        f'<div class="collage-tile ct-{i+1}" style="background-image:url(\'{people[cid]["photo"]}\')"></div>'
+        f'<img class="collage-tile ct-{i+1}" src="{people[cid]["photo"]}" alt="{people[cid]["name"]}" loading="lazy" decoding="async">'
         for i, cid in enumerate(ids)
     )
 
@@ -270,7 +270,8 @@ body {{
   opacity: 0; animation: riseIn .9s cubic-bezier(.16,1,.3,1) .5s forwards;
 }}
 .collage-tile {{
-  position: absolute; border-radius: 32px; background-size: cover; background-position: center;
+  position: absolute; display: block; border-radius: 32px;
+  width: auto; height: auto; object-fit: cover; object-position: center;
   animation: float 7s ease-in-out infinite;
 }}
 .ct-1 {{ width: 46%; height: 46%; left: 0; top: 4%; animation-delay: 0s; }}
@@ -301,9 +302,9 @@ body {{
 
 .card {{ flex: 0 0 250px; scroll-snap-align: start; }}
 .card-photo {{
-  width: 250px; height: 250px; border-radius: 25px;
-  background-size: cover; background-position: center top;
-  pointer-events: none;
+  display: block; width: 250px; height: 250px; border-radius: 25px;
+  object-fit: cover; object-position: center top;
+  pointer-events: none; background: #d9d9d9; /* placeholder tone while the lazy image loads in */
 }}
 .card-body {{
   background: #EEE; border-radius: 20px; padding: 20px;

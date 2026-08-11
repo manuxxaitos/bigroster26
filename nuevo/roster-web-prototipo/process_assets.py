@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
-import base64, io, json, os, subprocess, tempfile
+import base64, json, os, subprocess, tempfile
 from PIL import Image, ImageOps
 
 FOTOS = "/Users/tomascardozo/main/big/fotos"
 OUT = os.path.dirname(__file__)
+PHOTOS_DIR = os.path.join(OUT, "assets", "photos")
+os.makedirs(PHOTOS_DIR, exist_ok=True)
 
 # maca_castro and ammichis excluded from every roster appearance (client request)
 # tuple: (id, name, photo, tags, ig_followers, tt_followers, ig_handle, tt_handle)
@@ -38,7 +40,8 @@ def resolve_url(handle, platform):
     base = "https://www.instagram.com/" if platform == "instagram" else "https://www.tiktok.com/@"
     return f'{base}{handle.lstrip("@").strip()}' + ("/" if platform == "instagram" else "")
 
-def to_data_uri(path, max_dim=900, quality=76):
+def save_photo_file(path, pid, max_dim=900, quality=78):
+    """Writes assets/photos/{pid}.webp and returns (relative_path, bytes)."""
     try:
         img = Image.open(path)
     except Exception:
@@ -54,29 +57,29 @@ def to_data_uri(path, max_dim=900, quality=76):
     scale = max_dim / max(w, h)
     if scale < 1:
         img = img.resize((int(w * scale), int(h * scale)), Image.LANCZOS)
-    buf = io.BytesIO()
-    img.save(buf, format="JPEG", quality=quality, optimize=True)
-    b64 = base64.b64encode(buf.getvalue()).decode()
-    return f"data:image/jpeg;base64,{b64}", len(buf.getvalue())
+    out_path = os.path.join(PHOTOS_DIR, f"{pid}.webp")
+    img.save(out_path, format="WEBP", quality=quality, method=6)
+    rel_path = f"assets/photos/{pid}.webp"
+    return rel_path, os.path.getsize(out_path)
 
 data = {}
 total = 0
 for pid, name, relpath, tags, ig, tt, ig_h, tt_h in PEOPLE:
     full = os.path.join(FOTOS, relpath)
-    uri, size = to_data_uri(full)
+    photo_path, size = save_photo_file(full, pid)
     total += size
     data[pid] = dict(
-        name=name, photo=uri, tags=tags, ig=ig, tt=tt,
+        name=name, photo=photo_path, tags=tags, ig=ig, tt=tt,
         ig_url=resolve_url(ig_h, "instagram"), tt_url=resolve_url(tt_h, "tiktok"),
     )
-    print(f"{pid}: {size/1024:.0f}KB")
+    print(f"{pid}: {size/1024:.0f}KB -> {photo_path}")
 
-print(f"TOTAL photos: {total/1024:.0f}KB")
+print(f"TOTAL photos: {total/1024:.0f}KB (as separate files, not embedded)")
 
 with open(os.path.join(OUT, "people.json"), "w") as f:
     json.dump(data, f)
 
-# fonts
+# fonts stay embedded — small (~65KB total) and needed immediately for text render
 fonts = {}
 for w in ["Regular", "Medium", "Bold", "Black"]:
     p = os.path.join(OUT, f"Inter-{w}.woff2")
