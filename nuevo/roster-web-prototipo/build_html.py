@@ -1,9 +1,22 @@
 # -*- coding: utf-8 -*-
-import json, os, re
+import base64, io, json, os, re
+from PIL import Image
 
 HERE = os.path.dirname(__file__)
 people = json.load(open(os.path.join(HERE, "people.json")))
 fonts = json.load(open(os.path.join(HERE, "fonts.json")))
+
+def hero_photo_data_uri(path, max_dim=1100, quality=72):
+    im = Image.open(path)
+    w, h = im.size
+    scale = max_dim / max(w, h)
+    if scale < 1:
+        im = im.resize((int(w * scale), int(h * scale)), Image.LANCZOS)
+    buf = io.BytesIO()
+    im.save(buf, format="WEBP", quality=quality, method=6)
+    return f"data:image/webp;base64,{base64.b64encode(buf.getvalue()).decode()}"
+
+PORTADA_HERO_PHOTO = hero_photo_data_uri("/Users/tomascardozo/main/big/web/vectorfondo.png")
 
 FONDO_SVG_RAW = open("/Users/tomascardozo/main/big/brand/nuevo/FONDO.svg").read()
 FONDO_INNER = re.search(r"<svg[^>]*>(.*)</svg>", FONDO_SVG_RAW, re.S).group(1)
@@ -200,6 +213,22 @@ body {{
   display: flex; align-items: center; padding: 140px 0 100px;
 }}
 .portada .section-inner {{ max-width: 900px; }}
+
+/* group-photo hero: sits above the .bg-fondo curve (which keeps running
+   underneath, visible around/beyond it) and below all the portada text —
+   low final opacity so it reads as an ambient blend into the blue, not a
+   sharp foreground photo. Rounded corners are already baked into the
+   source PNG's alpha channel. */
+.portada-hero {{
+  position: absolute; top: 50%; right: -2%; z-index: 0;
+  width: 56%; max-width: 760px; aspect-ratio: 1.232;
+  background-size: cover; background-position: center; background-repeat: no-repeat;
+  border-radius: 28px; pointer-events: none;
+  opacity: 0; transform: translateY(-50%) scale(.96);
+  animation: heroIn 1.1s cubic-bezier(.16,1,.3,1) .25s forwards;
+}}
+@keyframes heroIn {{ to {{ opacity: .32; transform: translateY(-50%) scale(1); }} }}
+
 .portada-logo {{ margin-bottom: 34px; opacity: 0; animation: riseIn .7s cubic-bezier(.16,1,.3,1) .05s forwards; }}
 .portada h1 {{
   font-weight: 900; line-height: .9; letter-spacing: -0.045em;
@@ -354,6 +383,7 @@ footer {{
   .cat-cover .section-inner {{ grid-template-columns: 1fr; }}
   .cat-collage {{ height: 320px; order: -1; }}
   .tabs {{ max-width: 56vw; }}
+  .portada-hero {{ display: none; }}
 }}
 
 @media (prefers-reduced-motion: reduce) {{
@@ -380,6 +410,7 @@ footer {{
   </nav>
 
   <section class="portada" id="portada">
+    <div class="portada-hero" style="background-image:url('{PORTADA_HERO_PHOTO}')" aria-hidden="true"></div>
     <div class="section-inner">
       {isotipo_svg(52, "#FFFFFF", "portada-logo")}
       <h1>Roster<span class="lima">de Talentos</span></h1>
