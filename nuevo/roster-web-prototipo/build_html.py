@@ -6,14 +6,21 @@ HERE = os.path.dirname(__file__)
 people = json.load(open(os.path.join(HERE, "people.json")))
 fonts = json.load(open(os.path.join(HERE, "fonts.json")))
 
-def hero_photo_data_uri(path, max_dim=1100, quality=72):
-    im = Image.open(path)
-    w, h = im.size
+def hero_photo_data_uri(path, max_dim=1600, quality=74):
+    im = Image.open(path).convert("RGBA")
+    # flatten onto brand blue: the source has rounded corners baked into its
+    # alpha channel, which is fine for a small card but leaves transparent
+    # notches once this runs full-bleed edge to edge — filling with the
+    # exact azul makes the corners disappear into the page background.
+    flat = Image.new("RGBA", im.size, (0x33, 0x41, 0x9A, 255))
+    flat.paste(im, (0, 0), im)
+    flat = flat.convert("RGB")
+    w, h = flat.size
     scale = max_dim / max(w, h)
     if scale < 1:
-        im = im.resize((int(w * scale), int(h * scale)), Image.LANCZOS)
+        flat = flat.resize((int(w * scale), int(h * scale)), Image.LANCZOS)
     buf = io.BytesIO()
-    im.save(buf, format="WEBP", quality=quality, method=6)
+    flat.save(buf, format="WEBP", quality=quality, method=6)
     return f"data:image/webp;base64,{base64.b64encode(buf.getvalue()).decode()}"
 
 PORTADA_HERO_PHOTO = hero_photo_data_uri("/Users/tomascardozo/main/big/web/vectorfondo.png")
@@ -156,6 +163,11 @@ body {{
 }}
 
 .page-flow {{ position: relative; }}
+/* the curve only exists below the hero: .below-hero wraps everything that
+   comes after the portada photo, and .bg-fondo is scoped to it instead of
+   the whole page, so the SVG has nothing to run under while the hero photo
+   is on screen and only starts the moment the hero ends. */
+.below-hero {{ position: relative; }}
 .bg-fondo {{
   position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
 }}
@@ -207,28 +219,17 @@ body {{
 /* ---------- SECTION HEADS (shared) ---------- */
 .section-inner {{ position: relative; z-index: 1; width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 32px; }}
 
-/* ---------- PORTADA (general cover) ---------- */
+/* ---------- PORTADA (full-bleed photo hero) ---------- */
 .portada {{
   position: relative; min-height: 100vh; overflow: hidden;
   display: flex; align-items: center; padding: 140px 0 100px;
+  border-radius: 0 0 64px 64px; /* the hero is the whole top of the page; only its
+                                    bottom edge rounds off into the section below */
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat;
 }}
 .portada .section-inner {{ max-width: 900px; }}
-
-/* group-photo hero: sits above the .bg-fondo curve (which keeps running
-   underneath, visible around/beyond it) and below all the portada text —
-   low final opacity so it reads as an ambient blend into the blue, not a
-   sharp foreground photo. Rounded corners are already baked into the
-   source PNG's alpha channel. */
-.portada-hero {{
-  position: absolute; top: 50%; right: -2%; z-index: 0;
-  width: 56%; max-width: 760px; aspect-ratio: 1.232;
-  background-size: cover; background-position: center; background-repeat: no-repeat;
-  border-radius: 28px; pointer-events: none;
-  opacity: 0; transform: translateY(-50%) scale(.96);
-  animation: heroIn 1.1s cubic-bezier(.16,1,.3,1) .25s forwards;
-}}
-@keyframes heroIn {{ to {{ opacity: .32; transform: translateY(-50%) scale(1); }} }}
-
 .portada-logo {{ margin-bottom: 34px; opacity: 0; animation: riseIn .7s cubic-bezier(.16,1,.3,1) .05s forwards; }}
 .portada h1 {{
   font-weight: 900; line-height: .9; letter-spacing: -0.045em;
@@ -383,7 +384,7 @@ footer {{
   .cat-cover .section-inner {{ grid-template-columns: 1fr; }}
   .cat-collage {{ height: 320px; order: -1; }}
   .tabs {{ max-width: 56vw; }}
-  .portada-hero {{ display: none; }}
+  .portada {{ border-radius: 0 0 32px 32px; }}
 }}
 
 @media (prefers-reduced-motion: reduce) {{
@@ -396,8 +397,6 @@ footer {{
 </style>
 
 <div class="page-flow" id="pageFlow">
-  <div class="bg-fondo" aria-hidden="true">{fondo_svg()}</div>
-
   <nav class="nav">
     <button class="nav-brand" id="navBrand">
       {isotipo_svg(24, "#FFFFFF")}
@@ -409,8 +408,7 @@ footer {{
     </div>
   </nav>
 
-  <section class="portada" id="portada">
-    <div class="portada-hero" style="background-image:url('{PORTADA_HERO_PHOTO}')" aria-hidden="true"></div>
+  <section class="portada" id="portada" style="background-image:linear-gradient(180deg, rgba(51,65,154,.2) 0%, rgba(51,65,154,.35) 60%, rgba(51,65,154,.55) 100%), linear-gradient(100deg, rgba(51,65,154,.9) 0%, rgba(51,65,154,.5) 42%, rgba(51,65,154,.22) 68%, rgba(51,65,154,.4) 100%), url('{PORTADA_HERO_PHOTO}')">
     <div class="section-inner">
       {isotipo_svg(52, "#FFFFFF", "portada-logo")}
       <h1>Roster<span class="lima">de Talentos</span></h1>
@@ -421,14 +419,18 @@ footer {{
     </button>
   </section>
 
-  <div class="cat-viewport" id="catViewport">
-{sections_html}
-  </div>
+  <div class="below-hero">
+    <div class="bg-fondo" aria-hidden="true">{fondo_svg()}</div>
 
-  <footer>
-    <span>BIG Agency · Prototipo de sistema — 2026</span>
-    <span>Roster</span>
-  </footer>
+    <div class="cat-viewport" id="catViewport">
+{sections_html}
+    </div>
+
+    <footer>
+      <span>BIG Agency · Prototipo de sistema — 2026</span>
+      <span>Roster</span>
+    </footer>
+  </div>
 </div>
 
 <div class="toast" id="toast">Esta vista todavía no está armada</div>
