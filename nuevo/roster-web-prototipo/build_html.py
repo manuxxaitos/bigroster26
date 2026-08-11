@@ -5,7 +5,7 @@ HERE = os.path.dirname(__file__)
 people = json.load(open(os.path.join(HERE, "people.json")))
 fonts = json.load(open(os.path.join(HERE, "fonts.json")))
 
-FONDO_SVG_RAW = open("/Users/tomascardozo/main/big/brand/nuevo/FONDO.svg").read()
+FONDO_SVG_RAW = open("/Users/tomascardozo/main/big/web/vectorfondo.svg").read()
 FONDO_INNER = re.search(r"<svg[^>]*>(.*)</svg>", FONDO_SVG_RAW, re.S).group(1)
 FONDO_VIEWBOX = re.search(r'viewBox="([^"]+)"', FONDO_SVG_RAW).group(1)
 
@@ -127,7 +127,8 @@ html = f'''<title>BIG Roster 2026 — Prototipo</title>
   --azul: #33419A;
   --azul-2: #4C5AB8;
   --azul-dark: #262F73;
-  --naranja: #FF761E;
+  --naranja: #F36F2C;
+  --fondo: #F7D8BD;
   --lima: #E8F29C;
   --negro: #0D0D14;
   --blanco: #FFFFFF;
@@ -137,8 +138,8 @@ html = f'''<title>BIG Roster 2026 — Prototipo</title>
 html {{ scroll-behavior: smooth; }}
 body {{
   font-family: 'Inter', -apple-system, sans-serif;
-  background: var(--azul);
-  color: var(--blanco);
+  background: var(--fondo);
+  color: var(--azul);
   overflow-x: hidden;
   letter-spacing: -0.01em;
 }}
@@ -155,7 +156,6 @@ body {{
 .bg-fondo svg {{
   position: absolute; top: -5%; left: -5%; width: 110%; height: 110%; display: block;
 }}
-.bg-fondo .cls-1 {{ fill: rgba(0,0,0,.1); }}
 
 /* ---------- NAV ---------- */
 .nav {{
@@ -164,8 +164,8 @@ body {{
   padding: 18px 32px;
 }}
 .nav-brand {{ display: flex; align-items: center; gap: 10px; flex-shrink: 0; cursor: pointer; border: none; background: none; }}
-.nav-brand .word {{ font-family: inherit; font-weight: 800; font-size: 15px; letter-spacing: -0.02em; color: var(--blanco); }}
-.nav-brand .word b {{ color: var(--lima); font-weight: 900; }}
+.nav-brand .word {{ font-family: inherit; font-weight: 800; font-size: 15px; letter-spacing: -0.02em; color: var(--azul); }}
+.nav-brand .word b {{ font-weight: 900; }} /* azul (inherited) works on both the orange hero and the peach body; naranja text didn't */
 .tabs {{
   position: relative; display: flex; gap: 4px;
   overflow-x: auto; scrollbar-width: none; max-width: 74vw;
@@ -182,18 +182,18 @@ body {{
 .tab {{
   position: relative; z-index: 1;
   background: none; cursor: pointer; border-radius: 999px;
-  border: 1.5px solid rgba(255,118,30,.55); /* naranja outline, echoes the pill-chip reference */
+  border: 1.5px solid rgba(243,111,44,.55); /* naranja outline, echoes the pill-chip reference */
   font-family: inherit; font-size: 12.5px; font-weight: 600;
   letter-spacing: .02em; text-transform: uppercase;
-  color: rgba(255,255,255,.7); /* measured under WCAG AA's 4.5:1 on this blue */
+  color: rgba(51,65,154,.78); /* azul, legible on both the peach body and the orange hero */
   padding: 9px 16px; white-space: nowrap;
   transition: color .3s ease, border-color .3s ease;
 }}
 /* the sliding .tab-pill (orange fill) already tracks mouseenter as well as the
-   active tab — hover and active both "light up" the same way, so text just
-   needs to stay legible against the orange fill in either state. */
+   active tab — hover and active both "light up" the same way: white text sits
+   on top of the strong color, everywhere it's used as a fill. */
 .tab:hover, .tab.active {{
-  color: var(--negro); border-color: transparent; font-weight: 800;
+  color: var(--blanco); border-color: transparent; font-weight: 800;
 }}
 
 /* visible keyboard-focus ring, consistent across every interactive control */
@@ -211,19 +211,20 @@ body {{
   display: flex; align-items: center; padding: 140px 0 100px;
   border-radius: 0 0 64px 64px; /* the hero is the whole top of the page; only its
                                     bottom edge rounds off into the section below */
-  background: var(--azul-dark); /* one shade darker than --azul so the hero reads
-                                    as its own module against the curve below it */
-  border-bottom: 2px solid var(--lima);
+  background: var(--naranja); /* the strong color owns the hero so it reads as its
+                                  own bold module against the peach body below it */
+  border-bottom: 2px solid var(--fondo);
 }}
 .portada .section-inner {{ max-width: 900px; }}
 .portada-logo {{ margin-bottom: 34px; opacity: 0; animation: riseIn .7s cubic-bezier(.16,1,.3,1) .05s forwards; }}
 .portada h1 {{
-  font-weight: 900; line-height: .9; letter-spacing: -0.045em;
+  color: var(--blanco);
+  font-weight: 900; line-height: .85; letter-spacing: -0.07em; text-transform: uppercase;
   font-size: clamp(56px, 8vw, 128px);
   opacity: 0; transform: translateY(24px);
   animation: riseIn .8s cubic-bezier(.16,1,.3,1) .18s forwards;
 }}
-.portada h1 .lima {{ color: var(--lima); display: block; }}
+.portada h1 .lima {{ color: var(--fondo); display: block; }}
 .portada p {{
   margin-top: 26px; max-width: 520px; font-size: 20px; font-weight: 500;
   line-height: 1.5; color: rgba(255,255,255,.78);
@@ -259,15 +260,15 @@ body {{
   display: grid; grid-template-columns: 1.15fr 1fr; gap: 40px; align-items: center;
 }}
 .cat-cover h1 {{
-  font-weight: 900; line-height: .92; letter-spacing: -0.045em;
+  font-weight: 900; line-height: .85; letter-spacing: -0.07em; text-transform: uppercase;
   font-size: clamp(64px, 9vw, 148px);
   opacity: 0; transform: translateY(24px);
   animation: riseIn .8s cubic-bezier(.16,1,.3,1) .1s forwards;
 }}
-.cat-cover h1 .lima {{ color: var(--lima); }}
+.cat-cover h1 .lima {{ color: var(--naranja); }}
 .cat-cover p {{
   margin-top: 26px; max-width: 460px; font-size: 19px; font-weight: 500;
-  line-height: 1.45; color: rgba(255,255,255,.8);
+  line-height: 1.45; color: rgba(51,65,154,.75);
   opacity: 0; transform: translateY(18px);
   animation: riseIn .7s cubic-bezier(.16,1,.3,1) .38s forwards;
 }}
@@ -291,7 +292,7 @@ body {{
   opacity: 0; transform: translateY(20px); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
 }}
 .rail-head.inview {{ opacity: 1; transform: translateY(0); }}
-.rail-eyebrow {{ color: var(--lima); font-weight: 700; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; }}
+.rail-eyebrow {{ color: var(--naranja); font-weight: 700; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; }}
 .rail-head h2 {{ font-size: clamp(28px, 4vw, 40px); font-weight: 800; letter-spacing: -0.02em; margin-top: 10px; }}
 .rail-head p {{ margin-top: 12px; color: rgba(255,255,255,.6); font-size: 16px; max-width: 560px; }}
 
@@ -329,27 +330,27 @@ body {{
   transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
 }}
 .stat:hover {{
-  background: #FF9A47; transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(255,118,30,.35);
+  background: #F58C56; transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(243,111,44,.35);
 }}
-.stat-label {{ display: block; color: var(--lima); font-size: 10.5px; font-weight: 500; letter-spacing: -0.01em; }}
-.stat-value {{ display: block; color: var(--lima); font-size: 18px; font-weight: 700; letter-spacing: -0.03em; margin-top: 1px; }}
+.stat-label {{ display: block; color: var(--blanco); font-size: 10.5px; font-weight: 500; letter-spacing: -0.01em; }}
+.stat-value {{ display: block; color: var(--blanco); font-size: 18px; font-weight: 700; letter-spacing: -0.03em; margin-top: 1px; }}
 
 .rail-arrow {{
   position: absolute; top: 42%; transform: translateY(-50%);
   width: 46px; height: 46px; border-radius: 50%; border: none; cursor: pointer;
-  background: rgba(255,255,255,.14); color: var(--blanco);
+  background: rgba(51,65,154,.16); color: var(--azul);
   display: flex; align-items: center; justify-content: center; font-size: 18px;
   transition: background .25s ease, transform .25s ease;
   z-index: 3;
 }}
-.rail-arrow:hover {{ background: var(--lima); color: var(--negro); transform: translateY(-50%) scale(1.08); }}
+.rail-arrow:hover {{ background: var(--naranja); color: var(--blanco); transform: translateY(-50%) scale(1.08); }}
 .rail-arrow.prev {{ left: 4px; }}
 .rail-arrow.next {{ right: 4px; }}
 
 .progress-track {{ max-width: 1400px; margin: 8px auto 0; padding: 0 32px; }}
-.progress-bar {{ height: 3px; background: rgba(255,255,255,.14); border-radius: 3px; overflow: hidden; }}
-.progress-fill {{ height: 100%; width: 25%; background: var(--lima); border-radius: 3px; transition: width .1s linear; }}
+.progress-bar {{ height: 3px; background: rgba(51,65,154,.18); border-radius: 3px; overflow: hidden; }}
+.progress-fill {{ height: 100%; width: 25%; background: var(--naranja); border-radius: 3px; transition: width .1s linear; }}
 
 .toast {{
   position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px);
@@ -362,7 +363,7 @@ body {{
 
 footer {{
   padding: 46px 32px; display: flex; align-items: center; justify-content: space-between;
-  color: rgba(255,255,255,.4); font-size: 12.5px; border-top: 1px solid rgba(255,255,255,.1);
+  color: rgba(51,65,154,.6); font-size: 12.5px; border-top: 1px solid rgba(51,65,154,.18);
 }}
 
 @media (max-width: 860px) {{
@@ -384,7 +385,7 @@ footer {{
 <div class="page-flow" id="pageFlow">
   <nav class="nav">
     <button class="nav-brand" id="navBrand">
-      {isotipo_svg(24, "#FFFFFF")}
+      {isotipo_svg(24, "#33419A")}
       <span class="word">BIG <b>Roster 2026</b></span>
     </button>
     <div class="tabs" id="tabs">
