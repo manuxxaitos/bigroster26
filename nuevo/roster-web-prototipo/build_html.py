@@ -1,29 +1,9 @@
 # -*- coding: utf-8 -*-
-import base64, io, json, os, re
-from PIL import Image
+import json, os, re
 
 HERE = os.path.dirname(__file__)
 people = json.load(open(os.path.join(HERE, "people.json")))
 fonts = json.load(open(os.path.join(HERE, "fonts.json")))
-
-def hero_photo_data_uri(path, max_dim=1600, quality=74):
-    im = Image.open(path).convert("RGBA")
-    # flatten onto brand blue: the source has rounded corners baked into its
-    # alpha channel, which is fine for a small card but leaves transparent
-    # notches once this runs full-bleed edge to edge — filling with the
-    # exact azul makes the corners disappear into the page background.
-    flat = Image.new("RGBA", im.size, (0x33, 0x41, 0x9A, 255))
-    flat.paste(im, (0, 0), im)
-    flat = flat.convert("RGB")
-    w, h = flat.size
-    scale = max_dim / max(w, h)
-    if scale < 1:
-        flat = flat.resize((int(w * scale), int(h * scale)), Image.LANCZOS)
-    buf = io.BytesIO()
-    flat.save(buf, format="WEBP", quality=quality, method=6)
-    return f"data:image/webp;base64,{base64.b64encode(buf.getvalue()).decode()}"
-
-PORTADA_HERO_PHOTO = hero_photo_data_uri("/Users/tomascardozo/main/big/web/vectorfondo.png")
 
 FONDO_SVG_RAW = open("/Users/tomascardozo/main/big/brand/nuevo/FONDO.svg").read()
 FONDO_INNER = re.search(r"<svg[^>]*>(.*)</svg>", FONDO_SVG_RAW, re.S).group(1)
@@ -146,6 +126,7 @@ html = f'''<title>BIG Roster 2026 — Prototipo</title>
 :root {{
   --azul: #33419A;
   --azul-2: #4C5AB8;
+  --azul-dark: #262F73;
   --naranja: #FF761E;
   --lima: #E8F29C;
   --negro: #0D0D14;
@@ -219,15 +200,14 @@ body {{
 /* ---------- SECTION HEADS (shared) ---------- */
 .section-inner {{ position: relative; z-index: 1; width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 32px; }}
 
-/* ---------- PORTADA (full-bleed photo hero) ---------- */
+/* ---------- PORTADA (hero module, no photo) ---------- */
 .portada {{
   position: relative; min-height: 100vh; overflow: hidden;
   display: flex; align-items: center; padding: 140px 0 100px;
   border-radius: 0 0 64px 64px; /* the hero is the whole top of the page; only its
                                     bottom edge rounds off into the section below */
-  background-size: cover, cover, cover;
-  background-position: center, center, center;
-  background-repeat: no-repeat, no-repeat, no-repeat;
+  background: var(--azul-dark); /* one shade darker than --azul so the hero reads
+                                    as its own module against the curve below it */
 }}
 .portada .section-inner {{ max-width: 900px; }}
 .portada-logo {{ margin-bottom: 34px; opacity: 0; animation: riseIn .7s cubic-bezier(.16,1,.3,1) .05s forwards; }}
@@ -408,7 +388,7 @@ footer {{
     </div>
   </nav>
 
-  <section class="portada" id="portada" style="background-image:linear-gradient(180deg, rgba(51,65,154,.2) 0%, rgba(51,65,154,.35) 60%, rgba(51,65,154,.55) 100%), linear-gradient(100deg, rgba(51,65,154,.9) 0%, rgba(51,65,154,.5) 42%, rgba(51,65,154,.22) 68%, rgba(51,65,154,.4) 100%), url('{PORTADA_HERO_PHOTO}')">
+  <section class="portada" id="portada">
     <div class="section-inner">
       {isotipo_svg(52, "#FFFFFF", "portada-logo")}
       <h1>Roster<span class="lima">de Talentos</span></h1>
