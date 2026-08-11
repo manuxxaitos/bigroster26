@@ -77,7 +77,7 @@ def category_section(cat, active):
     <div class="cat-cover">
       <div class="section-inner">
         <div>
-          <h1>{head}<span class="lima">{tail}</span></h1>
+          <h1>{head}{tail}</h1>
           <p>{cat["subtitle"]}</p>
         </div>
         <div class="cat-collage">
@@ -88,7 +88,6 @@ def category_section(cat, active):
     <div class="cat-rail">
       <div class="rail-head">
         <div class="rail-eyebrow">{len(cat["order"])} creadores en nuestro equipo</div>
-        <h2>{cat["name"]}</h2>
       </div>
       <div class="rail-wrap">
         <button class="rail-arrow prev" aria-label="Anterior">‹</button>
@@ -163,9 +162,12 @@ body {{
   display: flex; align-items: center; justify-content: space-between;
   padding: 18px 32px;
 }}
-.nav-brand {{ display: flex; align-items: center; gap: 10px; flex-shrink: 0; cursor: pointer; border: none; background: none; }}
-.nav-brand .word {{ font-family: inherit; font-weight: 800; font-size: 15px; letter-spacing: -0.02em; color: var(--azul); }}
-.nav-brand .word b {{ font-weight: 900; }} /* azul (inherited) works on both the orange hero and the peach body; naranja text didn't */
+.nav-brand {{
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; border: none;
+  background: var(--naranja); border-radius: 12px; padding: 9px; /* solid chip so the white mark stays visible over both the hero and the peach body */
+  transition: background .25s ease;
+}}
+.nav-brand:hover {{ background: var(--azul); }}
 .tabs {{
   position: relative; display: flex; gap: 4px;
   overflow-x: auto; scrollbar-width: none; max-width: 74vw;
@@ -181,19 +183,16 @@ body {{
 .tab-pill.show {{ opacity: 1; }}
 .tab {{
   position: relative; z-index: 1;
-  background: none; cursor: pointer; border-radius: 999px;
-  border: 1.5px solid rgba(243,111,44,.55); /* naranja outline, echoes the pill-chip reference */
+  background: var(--fondo); cursor: pointer; border-radius: 999px;
+  border: 1.5px solid var(--naranja); /* solid peach chip, always readable regardless of what's behind the nav */
   font-family: inherit; font-size: 12.5px; font-weight: 600;
   letter-spacing: .02em; text-transform: uppercase;
-  color: rgba(51,65,154,.78); /* azul, legible on both the peach body and the orange hero */
+  color: var(--naranja);
   padding: 9px 16px; white-space: nowrap;
-  transition: color .3s ease, border-color .3s ease;
+  transition: color .3s ease, background .3s ease, border-color .3s ease;
 }}
-/* the sliding .tab-pill (orange fill) already tracks mouseenter as well as the
-   active tab — hover and active both "light up" the same way: white text sits
-   on top of the strong color, everywhere it's used as a fill. */
 .tab:hover, .tab.active {{
-  color: var(--blanco); border-color: transparent; font-weight: 800;
+  background: var(--naranja); color: var(--blanco); border-color: transparent; font-weight: 800;
 }}
 
 /* visible keyboard-focus ring, consistent across every interactive control */
@@ -260,12 +259,12 @@ body {{
   display: grid; grid-template-columns: 1.15fr 1fr; gap: 40px; align-items: center;
 }}
 .cat-cover h1 {{
+  color: var(--naranja);
   font-weight: 900; line-height: .85; letter-spacing: -0.07em; text-transform: uppercase;
   font-size: clamp(64px, 9vw, 148px);
   opacity: 0; transform: translateY(24px);
   animation: riseIn .8s cubic-bezier(.16,1,.3,1) .1s forwards;
 }}
-.cat-cover h1 .lima {{ color: var(--naranja); }}
 .cat-cover p {{
   margin-top: 26px; max-width: 460px; font-size: 19px; font-weight: 500;
   line-height: 1.45; color: rgba(51,65,154,.75);
@@ -293,8 +292,6 @@ body {{
 }}
 .rail-head.inview {{ opacity: 1; transform: translateY(0); }}
 .rail-eyebrow {{ color: var(--naranja); font-weight: 700; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; }}
-.rail-head h2 {{ font-size: clamp(28px, 4vw, 40px); font-weight: 800; letter-spacing: -0.02em; margin-top: 10px; }}
-.rail-head p {{ margin-top: 12px; color: rgba(255,255,255,.6); font-size: 16px; max-width: 560px; }}
 
 .rail-wrap {{ position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; }}
 .rail {{
@@ -385,8 +382,7 @@ footer {{
 <div class="page-flow" id="pageFlow">
   <nav class="nav">
     <button class="nav-brand" id="navBrand">
-      {isotipo_svg(24, "#33419A")}
-      <span class="word">BIG <b>Roster 2026</b></span>
+      {isotipo_svg(24, "#FFFFFF")}
     </button>
     <div class="tabs" id="tabs">
       <div class="tab-pill" id="tabPill"></div>
