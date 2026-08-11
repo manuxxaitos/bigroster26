@@ -67,16 +67,16 @@ def collage_html(ids):
         for i, cid in enumerate(ids)
     )
 
-def category_section(cat):
+def category_section(cat, active):
     slug = cat["slug"]
     head, tail = cat["split"]
     cards = "".join(card_html(pid, i) for i, pid in enumerate(cat["order"]))
+    active_cls = " active-cat" if active else ""
     return f'''
-  <section class="category" data-cat="{cat["name"]}" id="cat-{slug}">
+  <section class="category{active_cls}" data-cat="{cat["name"]}" data-slug="{slug}" id="cat-{slug}">
     <div class="cat-cover">
       <div class="section-inner">
         <div>
-          <div class="kicker"><span class="dot"></span>BIG Agency · Roster 2026</div>
           <h1>{head}<span class="lima">{tail}</span></h1>
           <p>{cat["subtitle"]}</p>
         </div>
@@ -115,8 +115,9 @@ font_faces = "\n".join(f'''
 def fondo_svg():
     return f'<svg viewBox="{FONDO_VIEWBOX}" preserveAspectRatio="xMidYMid slice">{FONDO_INNER}</svg>'
 
-sections_html = "\n".join(category_section(cat) for cat in SECTIONS)
+sections_html = "\n".join(category_section(cat, active=(i == 0)) for i, cat in enumerate(SECTIONS))
 first_slug = SECTIONS[0]["slug"]
+slug_map = json.dumps({cat["name"]: cat["slug"] for cat in SECTIONS})
 
 html = f'''<title>BIG Roster 2026 — Prototipo</title>
 <style>
@@ -186,12 +187,6 @@ body {{
 
 /* ---------- SECTION HEADS (shared) ---------- */
 .section-inner {{ position: relative; z-index: 1; width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 32px; }}
-.kicker {{
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: 12.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
-  color: rgba(255,255,255,.65); margin-bottom: 22px;
-}}
-.kicker .dot {{ width: 6px; height: 6px; border-radius: 50%; background: var(--lima); }}
 
 /* ---------- PORTADA (general cover) ---------- */
 .portada {{
@@ -224,6 +219,15 @@ body {{
 .scroll-cue .chev {{ display: block; animation: bounce 1.8s ease-in-out infinite; }}
 @keyframes bounce {{ 0%,100% {{ transform: translateY(0); }} 50% {{ transform: translateY(5px); }} }}
 
+/* ---------- CATEGORY VIEWPORT (one tab visible at a time) ---------- */
+.cat-viewport {{ position: relative; }}
+.category {{ display: none; }}
+.category.active-cat {{ display: block; }}
+.category.cat-out {{ animation: catOut .25s cubic-bezier(.4,0,1,1) forwards; }}
+.category.cat-in {{ animation: catIn .4s cubic-bezier(.16,1,.3,1); }}
+@keyframes catOut {{ to {{ opacity: 0; transform: translateX(-32px); }} }}
+@keyframes catIn {{ from {{ opacity: 0; transform: translateX(32px); }} to {{ opacity: 1; transform: translateX(0); }} }}
+
 /* ---------- CATEGORY: cover ---------- */
 .cat-cover {{
   position: relative; min-height: 92vh; overflow: hidden;
@@ -236,10 +240,9 @@ body {{
   font-weight: 900; line-height: .92; letter-spacing: -0.045em;
   font-size: clamp(64px, 9vw, 148px);
   opacity: 0; transform: translateY(24px);
-  animation: riseIn .8s cubic-bezier(.16,1,.3,1) .22s forwards;
+  animation: riseIn .8s cubic-bezier(.16,1,.3,1) .1s forwards;
 }}
 .cat-cover h1 .lima {{ color: var(--lima); }}
-.cat-cover .kicker {{ opacity: 0; transform: translateY(14px); animation: riseIn .7s cubic-bezier(.16,1,.3,1) .1s forwards; }}
 .cat-cover p {{
   margin-top: 26px; max-width: 460px; font-size: 19px; font-weight: 500;
   line-height: 1.45; color: rgba(255,255,255,.8);
@@ -305,6 +308,11 @@ body {{
 .stat {{
   flex: 1; background: var(--naranja); border-radius: 12px; padding: 10px 12px;
   text-decoration: none; color: inherit; pointer-events: auto;
+  transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+}}
+.stat:hover {{
+  background: #FF9A47; transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255,118,30,.35);
 }}
 .stat-label {{ display: block; color: var(--lima); font-size: 10.5px; font-weight: 500; letter-spacing: -0.01em; }}
 .stat-value {{ display: block; color: var(--lima); font-size: 18px; font-weight: 700; letter-spacing: -0.03em; margin-top: 1px; }}
@@ -366,11 +374,14 @@ footer {{
       <h1>Roster<span class="lima">de Talentos</span></h1>
       <p>Creadores y creadoras que conectan marcas con audiencias reales, en cada categoría y en cada red.</p>
     </div>
-    <button class="scroll-cue" onclick="document.getElementById('cat-{first_slug}').scrollIntoView({{behavior:'smooth'}})">
+    <button class="scroll-cue" onclick="document.getElementById('catViewport').scrollIntoView({{behavior:'smooth'}})">
       Explorar por categoría <span class="chev">↓</span>
     </button>
   </section>
+
+  <div class="cat-viewport" id="catViewport">
 {sections_html}
+  </div>
 
   <footer>
     <span>BIG Agency · Prototipo de sistema — 2026</span>
@@ -403,13 +414,44 @@ function setActive(cat) {{
   movePill(el);
 }}
 
+// --- category tabs: only one .category is ever in the DOM flow at a time ---
+const SLUG_MAP = {slug_map};
+const catViewport = document.getElementById('catViewport');
+const catSections = {{}};
+document.querySelectorAll('.category').forEach(el => {{ catSections[el.dataset.slug] = el; }});
+let activeSlug = Object.keys(catSections).find(s => catSections[s].classList.contains('active-cat')) || null;
+
+const CAT_OUT_MS = 250, CAT_IN_MS = 400;
+function showCategory(slug) {{
+  const next = catSections[slug];
+  if (!next || slug === activeSlug) return;
+  const current = activeSlug ? catSections[activeSlug] : null;
+  activeSlug = slug;
+  setActive(next.dataset.cat);
+  if (!current) {{
+    next.classList.add('active-cat', 'cat-in');
+    setTimeout(() => next.classList.remove('cat-in'), CAT_IN_MS);
+    return;
+  }}
+  current.classList.add('cat-out');
+  setTimeout(() => {{
+    current.classList.remove('active-cat', 'cat-out');
+    next.classList.add('active-cat', 'cat-in');
+    setTimeout(() => next.classList.remove('cat-in'), CAT_IN_MS);
+  }}, CAT_OUT_MS);
+}}
+
 const toast = document.getElementById('toast');
 let toastTimer;
 tabEls.forEach(t => {{
   t.addEventListener('mouseenter', () => movePill(t));
   t.addEventListener('click', () => {{
-    const target = document.getElementById('cat-' + t.dataset.cat.toLowerCase().replace(/[^a-z0-9]+/g, '-'));
-    if (target) {{ target.scrollIntoView({{ behavior: 'smooth' }}); return; }}
+    const slug = SLUG_MAP[t.dataset.cat];
+    if (slug) {{
+      catViewport.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
+      showCategory(slug);
+      return;
+    }}
     toast.textContent = `"${{t.dataset.cat}}" todavía no está armada en este prototipo`;
     toast.classList.add('show');
     clearTimeout(toastTimer);
@@ -419,15 +461,15 @@ tabEls.forEach(t => {{
 tabsEl.addEventListener('mouseleave', () => movePill(currentActive ? tabEls.find(t => t.dataset.cat === currentActive) : null));
 document.getElementById('navBrand').addEventListener('click', () => document.getElementById('portada').scrollIntoView({{ behavior: 'smooth' }}));
 
-const catObserver = new IntersectionObserver((entries) => {{
-  entries.forEach(e => {{ if (e.isIntersecting) setActive(e.target.dataset.cat); }});
-}}, {{ rootMargin: '-45% 0px -45% 0px', threshold: 0 }});
-document.querySelectorAll('.category').forEach(el => catObserver.observe(el));
-
 const portadaObserver = new IntersectionObserver((entries) => {{
   entries.forEach(e => {{ if (e.isIntersecting) setActive(null); }});
 }}, {{ rootMargin: '-45% 0px -45% 0px', threshold: 0 }});
 portadaObserver.observe(document.getElementById('portada'));
+
+const viewportObserver = new IntersectionObserver((entries) => {{
+  entries.forEach(e => {{ if (e.isIntersecting && activeSlug) setActive(catSections[activeSlug].dataset.cat); }});
+}}, {{ rootMargin: '-45% 0px -45% 0px', threshold: 0 }});
+viewportObserver.observe(catViewport);
 
 window.addEventListener('resize', () => movePill(currentActive ? tabEls.find(t => t.dataset.cat === currentActive) : null));
 
