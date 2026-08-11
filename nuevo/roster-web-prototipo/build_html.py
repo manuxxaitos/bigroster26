@@ -91,9 +91,9 @@ def category_section(cat, active):
         <h2>{cat["name"]}</h2>
       </div>
       <div class="rail-wrap">
-        <button class="rail-arrow prev">‹</button>
-        <button class="rail-arrow next">›</button>
-        <div class="rail">
+        <button class="rail-arrow prev" aria-label="Anterior">‹</button>
+        <button class="rail-arrow next" aria-label="Siguiente">›</button>
+        <div class="rail" tabindex="0" role="region" aria-label="Creadores de {cat["name"]}, deslizar con las flechas del teclado">
           {cards}
         </div>
       </div>
@@ -175,15 +175,21 @@ body {{
 .tab-pill.show {{ opacity: 1; }}
 .tab {{
   position: relative; z-index: 1;
-  background: none; border: none; cursor: pointer;
+  background: none; border: none; cursor: pointer; border-radius: 999px;
   font-family: inherit; font-size: 12.5px; font-weight: 600;
   letter-spacing: .02em; text-transform: uppercase;
-  color: rgba(255,255,255,.42);
+  color: rgba(255,255,255,.62); /* .42 measured under WCAG AA's 4.5:1 on this blue; .62 clears it */
   padding: 9px 16px; white-space: nowrap;
   transition: color .35s ease;
 }}
-.tab:hover {{ color: rgba(255,255,255,.85); }}
+.tab:hover {{ color: rgba(255,255,255,.9); }}
 .tab.active {{ color: var(--lima); font-weight: 800; }}
+
+/* visible keyboard-focus ring, consistent across every interactive control */
+.tab:focus-visible, .nav-brand:focus-visible, .stat:focus-visible,
+.rail-arrow:focus-visible, .rail:focus-visible, .scroll-cue:focus-visible {{
+  outline: 2px solid var(--lima); outline-offset: 3px;
+}}
 
 /* ---------- SECTION HEADS (shared) ---------- */
 .section-inner {{ position: relative; z-index: 1; width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 32px; }}
@@ -283,10 +289,7 @@ body {{
 .rail::-webkit-scrollbar {{ display: none; }}
 .rail.dragging {{ cursor: grabbing; scroll-snap-type: none; }}
 
-.card {{
-  flex: 0 0 250px; scroll-snap-align: start;
-  transition: transform .35s cubic-bezier(.16,1,.3,1);
-}}
+.card {{ flex: 0 0 250px; scroll-snap-align: start; }}
 .card-photo {{
   width: 250px; height: 250px; border-radius: 25px;
   background-size: cover; background-position: center top;
@@ -351,6 +354,14 @@ footer {{
   .cat-cover .section-inner {{ grid-template-columns: 1fr; }}
   .cat-collage {{ height: 320px; order: -1; }}
   .tabs {{ max-width: 56vw; }}
+}}
+
+@media (prefers-reduced-motion: reduce) {{
+  html {{ scroll-behavior: auto; }}
+  *, *::before, *::after {{
+    animation-duration: .001ms !important; animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important; scroll-behavior: auto !important;
+  }}
 }}
 </style>
 
@@ -421,7 +432,8 @@ const catSections = {{}};
 document.querySelectorAll('.category').forEach(el => {{ catSections[el.dataset.slug] = el; }});
 let activeSlug = Object.keys(catSections).find(s => catSections[s].classList.contains('active-cat')) || null;
 
-const CAT_OUT_MS = 250, CAT_IN_MS = 400;
+const REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const CAT_OUT_MS = REDUCE_MOTION ? 0 : 250, CAT_IN_MS = REDUCE_MOTION ? 0 : 400;
 function showCategory(slug) {{
   const next = catSections[slug];
   if (!next || slug === activeSlug) return;
@@ -479,15 +491,14 @@ const io = new IntersectionObserver((entries) => {{
 }}, {{ threshold: .2 }});
 document.querySelectorAll('.rail-head').forEach(el => io.observe(el));
 
-// --- carousel: drag to scroll + progress + focus scale (one instance per category) ---
+// --- carousel: drag to scroll + progress (one instance per category) ---
 document.querySelectorAll('.cat-rail').forEach(catRail => {{
   const rail = catRail.querySelector('.rail');
-  const cardsEls = Array.from(rail.querySelectorAll('.card'));
   const progressFill = catRail.querySelector('.progress-fill');
   const prevBtn = catRail.querySelector('.rail-arrow.prev');
   const nextBtn = catRail.querySelector('.rail-arrow.next');
 
-  let isDown = false, startX = 0, startScroll = 0, moved = false;
+  let isDown = false, startX = 0, startScroll = 0, moved = false, pendingDx = 0, rafScheduled = false;
   rail.addEventListener('pointerdown', (e) => {{
     if (e.target.closest('a')) return; // let real links click through, don't hijack via pointer capture
     isDown = true; moved = false;
@@ -495,51 +506,42 @@ document.querySelectorAll('.cat-rail').forEach(catRail => {{
     startX = e.clientX; startScroll = rail.scrollLeft;
     rail.setPointerCapture(e.pointerId);
   }});
+  // pointermove can fire far more often than the screen refreshes (high
+  // polling-rate mice/trackpads) — writing scrollLeft on every single event
+  // instead of once per animation frame was the main source of dropped
+  // frames while dragging.
   rail.addEventListener('pointermove', (e) => {{
     if (!isDown) return;
-    const dx = e.clientX - startX;
-    if (Math.abs(dx) > 4) moved = true;
-    rail.scrollLeft = startScroll - dx;
+    pendingDx = e.clientX - startX;
+    if (Math.abs(pendingDx) > 4) moved = true;
+    if (!rafScheduled) {{
+      rafScheduled = true;
+      requestAnimationFrame(() => {{
+        rail.scrollLeft = startScroll - pendingDx;
+        rafScheduled = false;
+      }});
+    }}
   }});
   ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev =>
     rail.addEventListener(ev, () => {{ isDown = false; rail.classList.remove('dragging'); }})
   );
   rail.addEventListener('click', (e) => {{ if (moved) e.preventDefault(); }}, true);
 
+  // progress bar only — the earlier per-card scale-on-scroll "focus" effect
+  // was dropped: it forced a getBoundingClientRect/layout pass for every
+  // card on every scroll frame, for a purely decorative touch. Native
+  // scroll-snap already gives a smooth, GPU-only carousel without it.
   function updateProgress() {{
     const max = rail.scrollWidth - rail.clientWidth;
     const pct = max > 0 ? (rail.scrollLeft / max) * 100 : 0;
     progressFill.style.width = pct + '%';
   }}
-
-  function updateFocus() {{
-    const railRect = rail.getBoundingClientRect();
-    const center = railRect.left + railRect.width / 2;
-    cardsEls.forEach(c => {{
-      const r = c.getBoundingClientRect();
-      const cCenter = r.left + r.width / 2;
-      const dist = Math.abs(center - cCenter);
-      const p = Math.max(0, 1 - dist / (railRect.width * .8));
-      const scale = .96 + p * .04;
-      c.style.transform = `scale(${{scale}})`;
-    }});
-  }}
-
-  let ticking = false;
-  rail.addEventListener('scroll', () => {{
-    updateProgress();
-    if (!ticking) {{
-      requestAnimationFrame(() => {{ updateFocus(); ticking = false; }});
-      ticking = true;
-    }}
-  }});
+  rail.addEventListener('scroll', updateProgress);
 
   prevBtn.addEventListener('click', () => rail.scrollBy({{ left: -276, behavior: 'smooth' }}));
   nextBtn.addEventListener('click', () => rail.scrollBy({{ left: 276, behavior: 'smooth' }}));
 
   updateProgress();
-  updateFocus();
-  window.addEventListener('resize', updateFocus);
 }});
 </script>
 '''
