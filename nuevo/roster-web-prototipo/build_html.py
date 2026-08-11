@@ -181,15 +181,20 @@ body {{
 .tab-pill.show {{ opacity: 1; }}
 .tab {{
   position: relative; z-index: 1;
-  background: none; border: none; cursor: pointer; border-radius: 999px;
+  background: none; cursor: pointer; border-radius: 999px;
+  border: 1.5px solid rgba(255,118,30,.55); /* naranja outline, echoes the pill-chip reference */
   font-family: inherit; font-size: 12.5px; font-weight: 600;
   letter-spacing: .02em; text-transform: uppercase;
-  color: rgba(255,255,255,.62); /* .42 measured under WCAG AA's 4.5:1 on this blue; .62 clears it */
+  color: rgba(255,255,255,.7); /* measured under WCAG AA's 4.5:1 on this blue */
   padding: 9px 16px; white-space: nowrap;
-  transition: color .35s ease;
+  transition: color .3s ease, border-color .3s ease;
 }}
-.tab:hover {{ color: rgba(255,255,255,.9); }}
-.tab.active {{ color: var(--lima); font-weight: 800; }}
+/* the sliding .tab-pill (orange fill) already tracks mouseenter as well as the
+   active tab — hover and active both "light up" the same way, so text just
+   needs to stay legible against the orange fill in either state. */
+.tab:hover, .tab.active {{
+  color: var(--negro); border-color: transparent; font-weight: 800;
+}}
 
 /* visible keyboard-focus ring, consistent across every interactive control */
 .tab:focus-visible, .nav-brand:focus-visible, .stat:focus-visible,
