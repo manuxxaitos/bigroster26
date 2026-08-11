@@ -5,10 +5,6 @@ HERE = os.path.dirname(__file__)
 people = json.load(open(os.path.join(HERE, "people.json")))
 fonts = json.load(open(os.path.join(HERE, "fonts.json")))
 
-# maca_castro and ammichis were pulled out of every roster appearance (client request)
-ORDER = ["pia_scarnato", "dulce_pink", "giuli_bellicoso",
-         "giuli_lourdes", "mely_francano", "martu_morales", "tiago_bergallo"]
-
 FONDO_SVG_RAW = open("/Users/tomascardozo/main/big/brand/nuevo/FONDO.svg").read()
 FONDO_INNER = re.search(r"<svg[^>]*>(.*)</svg>", FONDO_SVG_RAW, re.S).group(1)
 FONDO_VIEWBOX = re.search(r'viewBox="([^"]+)"', FONDO_SVG_RAW).group(1)
@@ -17,10 +13,28 @@ FONDO_VIEWBOX = re.search(r'viewBox="([^"]+)"', FONDO_SVG_RAW).group(1)
 LOGO_SVG_RAW = open("/Users/tomascardozo/main/big/brand/nuevo/big-logo2.svg").read()
 ISOTIPO_PATH = re.search(r'\sd="([^"]+)"', LOGO_SVG_RAW).group(1)
 ISOTIPO_VIEWBOX = re.search(r'viewBox="([^"]+)"', LOGO_SVG_RAW).group(1)
-RECURSO_PATH = "M376.85,226.04l-.42-2.37c-8.52-56.02-74.2-91.47-126.2-66.02-81.39,32.67-139.15,113.71-139.08,205.62,0,3.21-.72,6.42-2.39,9.16-8.31,13.62-32.12,10.97-36.51-4.88-.74-2.68-.75-5.52-.24-8.26,20.19-108.46,103.55-200.69,205.78-239.96.65-.28,1.3-.59,1.93-.92,47.9-28.39,32.35-109.58-23.51-117.35-3.79-.7-7.68-1.06-11.67-1.06H0v429.13h377.74c-.68-8.45,1.36-190.95-.89-203.09Z"
 
 CATEGORIES = ["Mujeres", "Hombres", "Lifestyle", "Beauty & Makeup", "Trends", "Fitness",
               "Humor & Sketches", "Entretenimiento", "Foodie", "Youtube", "Tecnología & Crypto"]
+
+# maca_castro and ammichis excluded from every roster appearance (client request)
+SECTIONS = [
+    dict(
+        slug="mujeres", name="Mujeres", split=("Muje", "res"),
+        subtitle="Moda, humor y estilo de vida — las creadoras que más conectan con sus audiencias en cada plataforma.",
+        collage=["juli_savioli", "pauli_veltrano", "sabri_ludmila"],
+        order=["juli_savioli", "pia_scarnato", "dulce_pink", "renata_blasevich", "giuli_bellicoso",
+               "pauli_veltrano", "agustina_cambra", "eve_vidal", "inez", "mumy",
+               "giuli_lourdes", "mely_francano", "martu_morales", "nanu_yael", "sabri_ludmila", "yo_soy_brisa"],
+    ),
+    dict(
+        slug="trends", name="Trends", split=("Tren", "ds"),
+        subtitle="Contenido que se mueve rápido: humor, moda y cultura pop, directo al feed de audiencias que marcan tendencia.",
+        collage=["pia_scarnato", "giuli_lourdes", "martu_morales"],
+        order=["pia_scarnato", "dulce_pink", "giuli_bellicoso", "giuli_lourdes",
+               "mely_francano", "martu_morales", "tiago_bergallo"],
+    ),
+]
 
 def isotipo_svg(size=28, color="#FFFFFF", cls=""):
     return f'<svg class="{cls}" width="{size}" height="{size}" viewBox="{ISOTIPO_VIEWBOX}" style="color:{color}"><path fill="currentColor" d="{ISOTIPO_PATH}"/></svg>'
@@ -47,13 +61,47 @@ def card_html(pid, i):
       </div>
     </article>'''
 
-cards = "".join(card_html(pid, i) for i, pid in enumerate(ORDER))
+def collage_html(ids):
+    return "".join(
+        f'<div class="collage-tile ct-{i+1}" style="background-image:url(\'{people[cid]["photo"]}\')"></div>'
+        for i, cid in enumerate(ids)
+    )
 
-collage_ids = ["pia_scarnato", "giuli_lourdes", "martu_morales"]
-collage = "".join(
-    f'<div class="collage-tile ct-{i+1}" style="background-image:url(\'{people[cid]["photo"]}\')"></div>'
-    for i, cid in enumerate(collage_ids)
-)
+def category_section(cat):
+    slug = cat["slug"]
+    head, tail = cat["split"]
+    cards = "".join(card_html(pid, i) for i, pid in enumerate(cat["order"]))
+    return f'''
+  <section class="category" data-cat="{cat["name"]}" id="cat-{slug}">
+    <div class="cat-cover">
+      <div class="section-inner">
+        <div>
+          <div class="kicker"><span class="dot"></span>BIG Agency · Roster 2026</div>
+          <h1>{head}<span class="lima">{tail}</span></h1>
+          <p>{cat["subtitle"]}</p>
+        </div>
+        <div class="cat-collage">
+          {collage_html(cat["collage"])}
+        </div>
+      </div>
+    </div>
+    <div class="cat-rail">
+      <div class="rail-head">
+        <div class="rail-eyebrow">{len(cat["order"])} creadores en nuestro equipo</div>
+        <h2>{cat["name"]}</h2>
+      </div>
+      <div class="rail-wrap">
+        <button class="rail-arrow prev">‹</button>
+        <button class="rail-arrow next">›</button>
+        <div class="rail">
+          {cards}
+        </div>
+      </div>
+      <div class="progress-track">
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+      </div>
+    </div>
+  </section>'''
 
 font_faces = "\n".join(f'''
 @font-face {{
@@ -66,6 +114,9 @@ font_faces = "\n".join(f'''
 
 def fondo_svg():
     return f'<svg viewBox="{FONDO_VIEWBOX}" preserveAspectRatio="xMidYMid slice">{FONDO_INNER}</svg>'
+
+sections_html = "\n".join(category_section(cat) for cat in SECTIONS)
+first_slug = SECTIONS[0]["slug"]
 
 html = f'''<title>BIG Roster 2026 — Prototipo</title>
 <style>
@@ -312,45 +363,15 @@ footer {{
       <h1>Roster<span class="lima">de Talentos</span></h1>
       <p>Creadores y creadoras que conectan marcas con audiencias reales, en cada categoría y en cada red.</p>
     </div>
-    <button class="scroll-cue" onclick="document.getElementById('cat-trends').scrollIntoView({{behavior:'smooth'}})">
+    <button class="scroll-cue" onclick="document.getElementById('cat-{first_slug}').scrollIntoView({{behavior:'smooth'}})">
       Explorar por categoría <span class="chev">↓</span>
     </button>
   </section>
-
-  <section class="category" data-cat="Trends" id="cat-trends">
-    <div class="cat-cover">
-      <div class="section-inner">
-        <div>
-          <div class="kicker"><span class="dot"></span>BIG Agency · Roster 2026</div>
-          <h1>Tren<span class="lima">ds</span></h1>
-          <p>Contenido que se mueve rápido: humor, moda y cultura pop, directo al feed de audiencias que marcan tendencia.</p>
-        </div>
-        <div class="cat-collage">
-          {collage}
-        </div>
-      </div>
-    </div>
-    <div class="cat-rail">
-      <div class="rail-head" id="railHead">
-        <div class="rail-eyebrow">{len(ORDER)} creadores en nuestro equipo</div>
-        <h2>Trends</h2>
-      </div>
-      <div class="rail-wrap">
-        <button class="rail-arrow prev" id="prevBtn">‹</button>
-        <button class="rail-arrow next" id="nextBtn">›</button>
-        <div class="rail" id="rail">
-          {cards}
-        </div>
-      </div>
-      <div class="progress-track">
-        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-      </div>
-    </div>
-  </section>
+{sections_html}
 
   <footer>
     <span>BIG Agency · Prototipo de sistema — 2026</span>
-    <span>Roster / Trends</span>
+    <span>Roster</span>
   </footer>
 </div>
 
@@ -411,66 +432,69 @@ window.addEventListener('resize', () => movePill(currentActive ? tabEls.find(t =
 const io = new IntersectionObserver((entries) => {{
   entries.forEach(e => {{ if (e.isIntersecting) e.target.classList.add('inview'); }});
 }}, {{ threshold: .2 }});
-document.querySelectorAll('#railHead').forEach(el => io.observe(el));
+document.querySelectorAll('.rail-head').forEach(el => io.observe(el));
 
-// --- carousel: drag to scroll + progress + focus scale ---
-const rail = document.getElementById('rail');
-const cardsEls = Array.from(document.querySelectorAll('.card'));
-const progressFill = document.getElementById('progressFill');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
+// --- carousel: drag to scroll + progress + focus scale (one instance per category) ---
+document.querySelectorAll('.cat-rail').forEach(catRail => {{
+  const rail = catRail.querySelector('.rail');
+  const cardsEls = Array.from(rail.querySelectorAll('.card'));
+  const progressFill = catRail.querySelector('.progress-fill');
+  const prevBtn = catRail.querySelector('.rail-arrow.prev');
+  const nextBtn = catRail.querySelector('.rail-arrow.next');
 
-let isDown = false, startX = 0, startScroll = 0, moved = false;
-rail.addEventListener('pointerdown', (e) => {{
-  isDown = true; moved = false;
-  rail.classList.add('dragging');
-  startX = e.clientX; startScroll = rail.scrollLeft;
-  rail.setPointerCapture(e.pointerId);
-}});
-rail.addEventListener('pointermove', (e) => {{
-  if (!isDown) return;
-  const dx = e.clientX - startX;
-  if (Math.abs(dx) > 4) moved = true;
-  rail.scrollLeft = startScroll - dx;
-}});
-['pointerup', 'pointerleave', 'pointercancel'].forEach(ev =>
-  rail.addEventListener(ev, () => {{ isDown = false; rail.classList.remove('dragging'); }})
-);
-rail.addEventListener('click', (e) => {{ if (moved) e.preventDefault(); }}, true);
-
-function updateProgress() {{
-  const max = rail.scrollWidth - rail.clientWidth;
-  const pct = max > 0 ? (rail.scrollLeft / max) * 100 : 0;
-  progressFill.style.width = pct + '%';
-}}
-
-function updateFocus() {{
-  const railRect = rail.getBoundingClientRect();
-  const center = railRect.left + railRect.width / 2;
-  cardsEls.forEach(c => {{
-    const r = c.getBoundingClientRect();
-    const cCenter = r.left + r.width / 2;
-    const dist = Math.abs(center - cCenter);
-    const p = Math.max(0, 1 - dist / (railRect.width * .8));
-    const scale = .96 + p * .04;
-    c.style.transform = `scale(${{scale}})`;
+  let isDown = false, startX = 0, startScroll = 0, moved = false;
+  rail.addEventListener('pointerdown', (e) => {{
+    isDown = true; moved = false;
+    rail.classList.add('dragging');
+    startX = e.clientX; startScroll = rail.scrollLeft;
+    rail.setPointerCapture(e.pointerId);
   }});
-}}
+  rail.addEventListener('pointermove', (e) => {{
+    if (!isDown) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > 4) moved = true;
+    rail.scrollLeft = startScroll - dx;
+  }});
+  ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev =>
+    rail.addEventListener(ev, () => {{ isDown = false; rail.classList.remove('dragging'); }})
+  );
+  rail.addEventListener('click', (e) => {{ if (moved) e.preventDefault(); }}, true);
 
-let ticking = false;
-rail.addEventListener('scroll', () => {{
-  updateProgress();
-  if (!ticking) {{
-    requestAnimationFrame(() => {{ updateFocus(); ticking = false; }});
-    ticking = true;
+  function updateProgress() {{
+    const max = rail.scrollWidth - rail.clientWidth;
+    const pct = max > 0 ? (rail.scrollLeft / max) * 100 : 0;
+    progressFill.style.width = pct + '%';
   }}
+
+  function updateFocus() {{
+    const railRect = rail.getBoundingClientRect();
+    const center = railRect.left + railRect.width / 2;
+    cardsEls.forEach(c => {{
+      const r = c.getBoundingClientRect();
+      const cCenter = r.left + r.width / 2;
+      const dist = Math.abs(center - cCenter);
+      const p = Math.max(0, 1 - dist / (railRect.width * .8));
+      const scale = .96 + p * .04;
+      c.style.transform = `scale(${{scale}})`;
+    }});
+  }}
+
+  let ticking = false;
+  rail.addEventListener('scroll', () => {{
+    updateProgress();
+    if (!ticking) {{
+      requestAnimationFrame(() => {{ updateFocus(); ticking = false; }});
+      ticking = true;
+    }}
+  }});
+
+  prevBtn.addEventListener('click', () => rail.scrollBy({{ left: -276, behavior: 'smooth' }}));
+  nextBtn.addEventListener('click', () => rail.scrollBy({{ left: 276, behavior: 'smooth' }}));
+
+  updateProgress();
+  updateFocus();
+  window.addEventListener('resize', updateFocus);
 }});
-
-prevBtn.addEventListener('click', () => rail.scrollBy({{ left: -276, behavior: 'smooth' }}));
-nextBtn.addEventListener('click', () => rail.scrollBy({{ left: 276, behavior: 'smooth' }}));
-
-window.addEventListener('load', () => {{ updateProgress(); updateFocus(); }});
-window.addEventListener('resize', updateFocus);
 </script>
 '''
 
